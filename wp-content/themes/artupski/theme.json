@@ -10,28 +10,29 @@
       "palette": [
         { "slug": "ink", "color": "#16181C", "name": "Ink Primary" },
         { "slug": "paper", "color": "#F4F0E6", "name": "Paper Ground" },
-        { "slug": "crimson", "color": "#C8102E", "name": "Crimson Accent" },
-        { "slug": "crimson-lt", "color": "#E8798A", "name": "Crimson Light (Ink Bands)" },
         { "slug": "ink-soft", "color": "#3A3D42", "name": "Ink Soft Body" },
         { "slug": "muted", "color": "#6E6A61", "name": "Muted Annotation" },
-        { "slug": "rule", "color": "#DAD4C6", "name": "Hairline Rule" }
+        { "slug": "crimson", "color": "#C8102E", "name": "Crimson Accent" },
+        { "slug": "crimson-lt", "color": "#E8798A", "name": "Crimson Light (Ink Bands)" },
+        { "slug": "rule", "color": "#DAD4C6", "name": "Hairline Rule" },
+        { "slug": "rule-dark", "color": "rgba(255, 255, 255, 0.16)", "name": "Hairline Rule (Ink Bands)" }
       ]
     },
     "typography": {
       "fluid": true,
       "fontFamilies": [
         {
-          "fontFamily": "\"Newsreader\", Georgia, serif",
+          "fontFamily": "\"Newsreader\", Georgia, \"Times New Roman\", serif",
           "slug": "serif",
           "name": "Newsreader (Display Serif)"
         },
         {
-          "fontFamily": "\"Manrope\", -apple-system, BlinkMacSystemFont, sans-serif",
+          "fontFamily": "\"Manrope\", system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif",
           "slug": "sans",
           "name": "Manrope (Grotesque Body)"
         },
         {
-          "fontFamily": "\"IBM Plex Mono\", monospace",
+          "fontFamily": "\"IBM Plex Mono\", ui-monospace, SFMono-Regular, Menlo, monospace",
           "slug": "mono",
           "name": "IBM Plex Mono (Annotation)"
         }
@@ -42,7 +43,18 @@
       "wideSize": "1440px"
     },
     "spacing": {
-      "units": ["px", "rem", "em", "vw", "%", "clamp"]
+      "units": ["px", "rem", "em", "vw", "%"],
+      "spacingSizes": [
+        { "slug": "maxw", "name": "Shell Max Width", "size": "1280px" },
+        { "slug": "gutter", "name": "Responsive Gutter", "size": "clamp(1.25rem, 5vw, 4rem)" },
+        { "slug": "section", "name": "Section Rhythm", "size": "clamp(4.5rem, 10vw, 9rem)" }
+      ]
+    },
+    "custom": {
+      "ease": "cubic-bezier(0.22, 0.61, 0.36, 1)",
+      "shadowLift": "0 18px 40px -24px rgba(22, 24, 28, 0.45)",
+      "paperDim": "rgba(244, 240, 230, 0.74)",
+      "inkDim": "rgba(22, 24, 28, 0.62)"
     }
   },
   "styles": {

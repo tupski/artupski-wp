@@ -48,6 +48,8 @@ These decisions are recorded consistently across the documentation suite and are
 4. **Full Site Editing**: **OUT OF SCOPE for v1.** Gutenberg remains the primary authoring experience, but v1 is **not** a full block/FSE theme. Block templates/template parts are kept only where they support the planned architecture.
 5. **Branding**: The repository is generic (**Contractor** reference). No prior client-specific branding remains in active documentation or `proposal/README.md`.
 6. **`server.log`**: Gitignored via `*.log`; left untouched.
+7. **Design token source of truth (Phase 2)**: `theme.json` is the canonical WordPress design-token source. `style.css` remains the required theme header/foundation file but is **not** a second token source. Runtime/component/layout CSS lives in `assets/css/site.css`. Stylesheets consume the generated `var(--wp--preset--*)` / `var(--wp--custom--*)` properties instead of redefining raw tokens.
+8. **Fonts (Phase 2)**: Newsreader, Manrope and IBM Plex Mono are **self-hosted WOFF2** (`assets/fonts/` + `assets/css/fonts.css`). There are **no runtime Google Fonts requests** and therefore **no `preconnect` hints** for a font host.
 
 ---
 
@@ -76,14 +78,23 @@ Complete technical and architectural specifications are located in [`docs/`](doc
 
 Run automated audits using Node.js:
 ```bash
+# PHP syntax lint
+node tools/php-lint.mjs
+
 # Contrast audit verification
 node tools/contrast-check.mjs
 
 # Portfolio records integrity audit
 node tools/_audit-portfolio.mjs
 
-# Production minification
-node tools/minify.mjs
+# Theme build (minify site.css/fonts.css/site.js)
+node tools/build-theme.mjs
+
+# Re-download + regenerate self-hosted fonts (maintainers only)
+node tools/fetch-fonts.mjs
+
+# Phase 2 foundation & asset-pipeline verification
+node tools/phase2-check.mjs
 
 # Full QA test runner
 node tools/qa-check.mjs

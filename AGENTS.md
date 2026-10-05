@@ -103,7 +103,9 @@ Before implementing or proposing changes, consult the documentation suite:
 ## 4. Verification & Testing Commands
 
 To run project audits and verification routines:
+- Run PHP syntax lint: `node tools/php-lint.mjs`
 - Run contrast audit: `node tools/contrast-check.mjs`
 - Run portfolio record audit: `node tools/_audit-portfolio.mjs`
-- Run asset minification: `node tools/minify.mjs`
+- Run the theme build/minification (canonical): `node tools/build-theme.mjs`
+- Run Phase 2 foundation verification: `node tools/phase2-check.mjs`
 - Run general QA check: `node tools/qa-check.mjs`

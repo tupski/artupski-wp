@@ -12,32 +12,33 @@ Key visual attributes:
 
 ---
 
-## 2. Design Tokens (`:root` CSS Custom Properties)
+## 2. Design Tokens
 
-Audited directly from `assets/css/site.css`:
+**Source of truth:** `theme.json` is the canonical WordPress design-token source
+(Phase 2 decision). WordPress exposes each token at runtime as a generated CSS
+custom property (`var(--wp--preset--*)`). The theme's stylesheets (`style.css`,
+`assets/css/site.css`, `assets/css/editor-style.css`) **consume** these
+properties and MUST NOT redefine a second set of raw token values.
 
 ### 2.1 Color Tokens & Contrast Ratios
-```css
-:root {
-  /* Core Ground & Text */
-  --ink: #16181c;          /* Primary text, ink bands, deep contrast */
-  --paper: #f4f0e6;        /* Signature warm bone/paper background */
-  --ink-soft: #3a3d42;     /* Secondary long copy text */
-  --muted: #6e6a61;        /* Metadata labels & technical annotations */
-  
-  /* Brand Accent Tokens */
-  --crimson: #c8102e;      /* Accent: eyebrows, rules, focus rings, hover */
-  --crimson-lt: #e8798a;   /* Light accent for ink bands only (AA on #16181C) */
-  
-  /* Structural Hairlines */
-  --rule: #dad4c6;         /* Hairline dividers on paper */
-  --rule-dark: rgba(255, 255, 255, 0.16); /* Hairlines on dark ink bands */
-  
-  /* Transparent Tints */
-  --paper-dim: rgba(244, 240, 230, 0.74);
-  --ink-dim: rgba(22, 24, 28, 0.62);
-}
-```
+
+Defined in `theme.json` → `settings.color.palette`, consumed as
+`var(--wp--preset--color--<slug>)`:
+
+| theme.json slug | Generated custom property | Value | Role |
+|---|---|---|---|
+| `ink` | `var(--wp--preset--color--ink)` | `#16181C` | Primary text, ink bands, deep contrast |
+| `paper` | `var(--wp--preset--color--paper)` | `#F4F0E6` | Signature warm bone/paper background |
+| `ink-soft` | `var(--wp--preset--color--ink-soft)` | `#3A3D42` | Secondary long copy text |
+| `muted` | `var(--wp--preset--color--muted)` | `#6E6A61` | Metadata labels & technical annotations |
+| `crimson` | `var(--wp--preset--color--crimson)` | `#C8102E` | Accent: eyebrows, rules, focus rings, hover |
+| `crimson-lt` | `var(--wp--preset--color--crimson-lt)` | `#E8798A` | Light accent for ink bands only (AA on `#16181C`) |
+| `rule` | `var(--wp--preset--color--rule)` | `#DAD4C6` | Hairline dividers on paper |
+| `rule-dark` | `var(--wp--preset--color--rule-dark)` | `rgba(255,255,255,0.16)` | Hairlines on dark ink bands |
+
+Transparent tints (`paper-dim` `rgba(244,240,230,0.74)`, `ink-dim`
+`rgba(22,24,28,0.62)`) are declared under `settings.custom` and exposed as
+`var(--wp--custom--paper-dim)` / `var(--wp--custom--ink-dim)`.
 
 #### Contrast Verification Matrix (WCAG 2.1 AA)
 | Foreground Token | Background Token | Calculated Ratio | WCAG AA Status | Role / Usage |
@@ -57,13 +58,17 @@ Audited directly from `assets/css/site.css`:
 
 Artupski pairs an authoritative editorial serif with a crisp technical grotesque and a blueprint monospace:
 
-```css
-:root {
-  --serif: "Newsreader", Georgia, "Times New Roman", serif;
-  --sans: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-}
-```
+Defined in `theme.json` → `settings.typography.fontFamilies`, consumed as
+`var(--wp--preset--font-family--<slug>)`:
+
+| theme.json slug | Generated custom property | Stack |
+|---|---|---|
+| `serif` | `var(--wp--preset--font-family--serif)` | `"Newsreader", Georgia, "Times New Roman", serif` |
+| `sans` | `var(--wp--preset--font-family--sans)` | `"Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif` |
+| `mono` | `var(--wp--preset--font-family--mono)` | `"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace` |
+
+All three families are **self-hosted WOFF2** (see `docs/PERFORMANCE.md` §3); no
+runtime Google Fonts request is made.
 
 #### Typography Scale & Application
 - **Hero Title**: `clamp(2.8rem, 8vw, 6rem)` / `1.02` line-height / serif / letter-spacing `-0.02em`
@@ -79,15 +84,13 @@ Artupski pairs an authoritative editorial serif with a crisp technical grotesque
 ---
 
 ### 2.3 Layout & Spatial Units
-```css
-:root {
-  --maxw: 1280px;                                 /* Maximum shell content container width */
-  --gutter: clamp(1.25rem, 5vw, 4rem);           /* Responsive horizontal padding */
-  --section: clamp(4.5rem, 10vw, 9rem);          /* Fluid vertical section separation */
-  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);     /* Natural deceleration curve */
-  --shadow-lift: 0 18px 40px -24px rgba(22, 24, 28, 0.45); /* Subtle elevation */
-}
-```
+| theme.json location | Generated custom property | Value | Role |
+|---|---|---|---|
+| `settings.layout.contentSize` | `var(--wp--style--global--content-size)` | `1280px` | Maximum shell content container width |
+| `settings.spacing.spacingSizes` (`gutter`) | `var(--wp--preset--spacing--gutter)` | `clamp(1.25rem, 5vw, 4rem)` | Responsive horizontal padding |
+| `settings.spacing.spacingSizes` (`section`) | `var(--wp--preset--spacing--section)` | `clamp(4.5rem, 10vw, 9rem)` | Fluid vertical section separation |
+| `settings.custom.ease` | `var(--wp--custom--ease)` | `cubic-bezier(0.22, 0.61, 0.36, 1)` | Natural deceleration curve |
+| `settings.custom.shadowLift` | `var(--wp--custom--shadow-lift)` | `0 18px 40px -24px rgba(22,24,28,0.45)` | Subtle elevation |
 
 ---
 

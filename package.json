@@ -7,10 +7,12 @@
   "type": "module",
   "scripts": {
     "build": "node tools/build-theme.mjs",
+    "fonts": "node tools/fetch-fonts.mjs",
     "lint:php": "node tools/php-lint.mjs",
     "test": "node tools/qa-check.mjs && node tools/contrast-check.mjs",
     "test:contrast": "node tools/contrast-check.mjs",
     "test:qa": "node tools/qa-check.mjs",
+    "test:phase2": "node tools/phase2-check.mjs",
     "audit:portfolio": "node tools/_audit-portfolio.mjs"
   },
   "engines": {

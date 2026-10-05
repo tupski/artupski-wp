@@ -34,7 +34,7 @@ A dropdown option (`artupski_palette_preset`) allows 1-click theme mood switchin
 ### 2.2 Section: Typography & Sizing (`artupski_typography`)
 | Setting ID | Control Type | Default Value | Description |
 |---|---|---|---|
-| `artupski_font_source` | Radio | `google` | Google Fonts CDN or Local Self-Hosted WOFF2 |
+| `artupski_font_source` | Radio | `local` | Local Self-Hosted WOFF2 (default, Phase 2) or Google Fonts CDN (opt-in only) |
 | `artupski_font_serif` | Text / Select| `Newsreader` | Primary Display Serif font family (`--serif`) |
 | `artupski_font_sans` | Text / Select| `Manrope` | Primary Body Grotesque font family (`--sans`) |
 | `artupski_font_mono` | Text / Select| `IBM Plex Mono`| Blueprint Annotation Mono family (`--mono`)|

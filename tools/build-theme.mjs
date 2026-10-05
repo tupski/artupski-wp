@@ -4,8 +4,9 @@
  * Conservative minification of the theme's OWN first-party CSS/JS, producing the
  * build output that `inc/class-assets.php` serves outside of WP_DEBUG:
  *
- *   wp-content/themes/artupski/assets/css/site.css -> site.min.css
- *   wp-content/themes/artupski/assets/js/site.js   -> site.min.js
+ *   wp-content/themes/artupski/assets/css/site.css  -> site.min.css
+ *   wp-content/themes/artupski/assets/css/fonts.css -> fonts.min.css
+ *   wp-content/themes/artupski/assets/js/site.js    -> site.min.js
  *
  * The vendored Turbo bundle (`assets/js/vendor/turbo.js`) is third-party and is
  * NEVER touched. No bundler and no dependency install: Node standard library
@@ -22,6 +23,7 @@ const THEME = "wp-content/themes/artupski";
 
 const targets = [
   { src: `${THEME}/assets/css/site.css`, out: `${THEME}/assets/css/site.min.css`, kind: "css" },
+  { src: `${THEME}/assets/css/fonts.css`, out: `${THEME}/assets/css/fonts.min.css`, kind: "css" },
   { src: `${THEME}/assets/js/site.js`, out: `${THEME}/assets/js/site.min.js`, kind: "js" },
 ];
 

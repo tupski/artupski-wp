@@ -15,46 +15,21 @@ Tags: blog, custom-menu, featured-images, editor-style, translation-ready
 */
 
 /*
- * This file declares the theme and provides the global reset + design tokens.
- * The production stylesheet enqueued on the front end is
+ * This file declares the theme and provides the global reset + foundation only.
+ *
+ * DESIGN TOKENS: `theme.json` is the single, canonical source of truth for all
+ * design tokens (color palette, font families, layout bounds, spacing sizes).
+ * This file MUST NOT define a second set of raw token values. Any token consumed
+ * here is referenced through the WordPress-generated custom properties
+ * (`var(--wp--preset--*)`).
+ *
+ * The runtime/component/layout stylesheet enqueued on the front end is
  * `assets/css/site.css` (minified to `assets/css/site.min.css` by the build).
+ * Self-hosted webfonts are declared in `assets/css/fonts.css`.
  * Component and template styles are layered in later phases.
- * Design tokens mirror docs/DESIGN_SYSTEM.md.
  */
 
-/* ---------- Design tokens ---------- */
-:root {
-  /* Core ground & text */
-  --ink: #16181c;
-  --paper: #f4f0e6;
-  --ink-soft: #3a3d42;
-  --muted: #6e6a61;
-
-  /* Brand accents */
-  --crimson: #c8102e;
-  --crimson-lt: #e8798a; /* ink bands only (AA on --ink) */
-
-  /* Structural hairlines */
-  --rule: #dad4c6;
-  --rule-dark: rgba(255, 255, 255, 0.16);
-
-  /* Transparent tints */
-  --paper-dim: rgba(244, 240, 230, 0.74);
-  --ink-dim: rgba(22, 24, 28, 0.62);
-
-  /* Typography */
-  --serif: "Newsreader", Georgia, "Times New Roman", serif;
-  --sans: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-
-  /* Layout */
-  --maxw: 1280px;
-  --gutter: clamp(1.25rem, 5vw, 4rem);
-  --section: clamp(4.5rem, 10vw, 9rem);
-  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
-}
-
-/* ---------- Global reset ---------- */
+/* ---------- Global reset / foundation ---------- */
 *,
 *::before,
 *::after {
@@ -68,9 +43,9 @@ html {
 
 body {
   margin: 0;
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--sans);
+  background: var(--wp--preset--color--paper);
+  color: var(--wp--preset--color--ink);
+  font-family: var(--wp--preset--font-family--sans);
   font-size: 1.0625rem;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
@@ -91,7 +66,7 @@ img {
 
 /* Visible focus rings are mandatory (docs/DESIGN_SYSTEM.md). */
 :where(a, button, input, select, textarea):focus-visible {
-  outline: 2px solid var(--crimson);
+  outline: 2px solid var(--wp--preset--color--crimson);
   outline-offset: 3px;
 }
 

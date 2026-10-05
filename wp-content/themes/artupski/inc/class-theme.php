@@ -92,8 +92,10 @@ class Artupski_Theme {
 		);
 
 		// Block editor styling and Gutenberg features (Gutenberg-primary authoring).
+		// The self-hosted fonts are loaded into the editor canvas as part of the
+		// asset pipeline so authoring matches the front end (no Google Fonts).
 		add_theme_support( 'editor-styles' );
-		add_editor_style( 'assets/css/editor-style.css' );
+		add_editor_style( array( 'assets/css/fonts.css', 'assets/css/editor-style.css' ) );
 		add_theme_support( 'responsive-embeds' );
 		add_theme_support( 'wp-block-styles' );
 		add_theme_support( 'align-wide' );

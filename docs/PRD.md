@@ -63,7 +63,7 @@ Both deployment modes are driven by a **single shared import engine** exposed th
 - **Brand Accents**: Primary Accent Crimson (`#C8102E` default), Secondary Ink Dark (`#16181C`), Dark Accent (`#E8798A`).
 - **Header Configurations**: Standard horizontal bar, sticky header, split brand/nav bar, mobile sliding drawer with keyboard trap.
 - **Footer Configurations**: 4-column dossier index, 3-column corporate, or minimal split copyright/legal bar.
-- **Typography Engine**: Google Fonts toggle or local self-hosted WOFF2 bundle (GDPR compliant).
+- **Typography Engine**: Self-hosted WOFF2 bundle is the default (Newsreader, Manrope, IBM Plex Mono; GDPR compliant, no runtime third-party request). Any Google Fonts fallback is an explicit opt-in.
 
 ### 4.2 Content Models & Custom Post Types
 

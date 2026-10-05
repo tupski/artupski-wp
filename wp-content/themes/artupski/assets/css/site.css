@@ -4,45 +4,15 @@
    crimson, Newsreader (display serif) + Manrope (technical grotesque) +
    IBM Plex Mono (annotation only).
 
-   Phase 1 provides the token layer, reset and base shell. Component, hero,
-   carousel and lightbox styles are layered in later phases.
-   Tokens mirror docs/DESIGN_SYSTEM.md.
+   TOKENS: `theme.json` is the single, canonical source of truth for design
+   tokens. This stylesheet MUST NOT redefine raw token values; it consumes the
+   WordPress-generated custom properties (`var(--wp--preset--*)`) only.
+
+   Phase 1 provides the reset and base shell. Component, hero, carousel and
+   lightbox styles are layered in later phases.
    ========================================================================== */
 
-/* ---------- 1. Tokens ---------- */
-:root {
-  /* Core ground & text */
-  --ink: #16181c;
-  --paper: #f4f0e6;
-  --ink-soft: #3a3d42;
-  --muted: #6e6a61;
-
-  /* Brand accents */
-  --crimson: #c8102e;
-  --crimson-lt: #e8798a; /* ink bands only (AA on --ink) */
-
-  /* Structural hairlines */
-  --rule: #dad4c6;
-  --rule-dark: rgba(255, 255, 255, 0.16);
-
-  /* Transparent tints */
-  --paper-dim: rgba(244, 240, 230, 0.74);
-  --ink-dim: rgba(22, 24, 28, 0.62);
-
-  /* Typography */
-  --serif: "Newsreader", Georgia, "Times New Roman", serif;
-  --sans: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-
-  /* Layout */
-  --maxw: 1280px;
-  --gutter: clamp(1.25rem, 5vw, 4rem);
-  --section: clamp(4.5rem, 10vw, 9rem);
-  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
-  --shadow-lift: 0 18px 40px -24px rgba(22, 24, 28, 0.45);
-}
-
-/* ---------- 2. Reset / base ---------- */
+/* ---------- 1. Reset / base ---------- */
 *,
 *::before,
 *::after { box-sizing: border-box; }
@@ -54,9 +24,9 @@ html {
 
 body {
   margin: 0;
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--sans);
+  background: var(--wp--preset--color--paper);
+  color: var(--wp--preset--color--ink);
+  font-family: var(--wp--preset--font-family--sans);
   font-size: 1.0625rem;
   line-height: 1.7;
   font-weight: 400;
@@ -83,16 +53,16 @@ button {
 }
 
 h1, h2, h3, h4 {
-  font-family: var(--serif);
+  font-family: var(--wp--preset--font-family--serif);
   font-weight: 500;
   line-height: 1.1;
   letter-spacing: -0.02em;
   margin: 0 0 0.6em;
 }
 
-/* ---------- 3. Accessibility helpers ---------- */
+/* ---------- 2. Accessibility helpers ---------- */
 :where(a, button, input, select, textarea):focus-visible {
-  outline: 2px solid var(--crimson);
+  outline: 2px solid var(--wp--preset--color--crimson);
   outline-offset: 3px;
 }
 
@@ -114,40 +84,40 @@ h1, h2, h3, h4 {
   left: 0;
   z-index: 1000;
   padding: 0.75rem 1rem;
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--wp--preset--color--ink);
+  color: var(--wp--preset--color--paper);
 }
 
 .skip-link:focus {
   position: fixed;
 }
 
-/* ---------- 4. Shell & base layout ---------- */
+/* ---------- 3. Shell & base layout ---------- */
 .shell {
   width: 100%;
-  max-width: var(--maxw);
+  max-width: var(--wp--style--global--content-size);
   margin-inline: auto;
-  padding-inline: var(--gutter);
+  padding-inline: var(--wp--preset--spacing--gutter);
 }
 
 .site-main {
   display: block;
   min-height: 40vh;
-  padding-block: var(--section);
+  padding-block: var(--wp--preset--spacing--section);
 }
 
 .site-header,
 .site-footer {
-  border-color: var(--rule);
+  border-color: var(--wp--preset--color--rule);
 }
 
 .site-header {
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 1px solid var(--wp--preset--color--rule);
 }
 
 .site-footer {
-  border-top: 1px solid var(--rule);
-  padding-block: calc(var(--section) / 2);
+  border-top: 1px solid var(--wp--preset--color--rule);
+  padding-block: calc(var(--wp--preset--spacing--section) / 2);
 }
 
 .header-inner,
@@ -173,17 +143,17 @@ h1, h2, h3, h4 {
 
 .colophon {
   margin: 0;
-  font-family: var(--mono);
+  font-family: var(--wp--preset--font-family--mono);
   font-size: 0.8125rem;
-  color: var(--muted);
+  color: var(--wp--preset--color--muted);
 }
 
-/* ---------- 5. Entry content (fallback template) ---------- */
+/* ---------- 4. Entry content (fallback template) ---------- */
 .entry-content { max-width: 72ch; }
 
 .entry-content > * + * { margin-top: 1.4rem; }
 
-/* ---------- 6. Reduced motion ---------- */
+/* ---------- 5. Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

@@ -39,7 +39,7 @@ do_action( 'artupski_before_header' );
 				<?php the_custom_logo(); ?>
 			<?php else : ?>
 				<a class="brand" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-					<span class="wordmark"><?php bloginfo( 'name' ); ?></span>
+					<span class="wordmark"><?php echo esc_html( get_bloginfo( 'name' ) ); ?></span>
 				</a>
 			<?php endif; ?>
 		</div>

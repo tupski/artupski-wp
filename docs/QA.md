@@ -11,23 +11,38 @@ Quality assurance for Artupski is structured across automated CLI pipelines, bro
 ```
 +-----------------------------------------------------------------------------------+
 |                            AUTOMATED QA PIPELINE                                  |
-|   ├──► PHP CodeSniffer (phpcs): WordPress-Core, WordPress-Extra, PHPCompatibility |
+|   ├──► PHP Syntax Lint: tools/php-lint.mjs (php -l across wp-content/)            |
 |   ├──► Contrast Verification: tools/contrast-check.mjs (WCAG AA >= 4.5:1)         |
 |   ├──► Portfolio Audit: tools/_audit-portfolio.mjs (45 deduplicated entries)     |
-|   ├──► Asset Minification: tools/minify.mjs (CSS / JS terser & clean-css)        |
+|   ├──► Theme Build: tools/build-theme.mjs (site.css/fonts.css/site.js -> *.min)  |
+|   ├──► Phase 2 Verification: tools/phase2-check.mjs (tokens/fonts/build sync)     |
 |   └──► Comprehensive QA Runner: tools/qa-check.mjs                                |
 +-----------------------------------------------------------------------------------+
 ```
 
 ### 2.1 Automated Tooling Verification
+- **PHP Syntax Lint (`tools/php-lint.mjs`)**: Runs `php -l` across every `.php` file under `wp-content/` (skips gracefully when PHP is unavailable). Also exposed as `npm run lint:php`.
 - **Contrast Check (`tools/contrast-check.mjs`)**:
   - Tests foreground/background color tokens across paper and ink grounds.
   - Verifies `--ink` (`#16181C`) on `--paper` (`#F4F0E6`) >= 4.5:1.
   - Verifies `--muted` (`#6E6A61`) on `--paper` (`#F4F0E6`) >= 4.5:1.
   - Verifies `--crimson-lt` (`#E8798A`) on `--ink` (`#16181C`) >= 4.5:1.
+  - Also exposed as `npm run test:contrast`.
 - **Portfolio Integrity Check (`tools/_audit-portfolio.mjs`)**:
   - Validates that 45 projects exist across 2003–2024.
   - Ensures zero duplicate entries and valid taxonomy terms.
+  - Also exposed as `npm run audit:portfolio`.
+- **Theme Build (`tools/build-theme.mjs`)** — the **canonical** theme build/minification command:
+  - Minifies first-party sources in place: `assets/css/site.css → site.min.css`, `assets/css/fonts.css → fonts.min.css`, `assets/js/site.js → site.min.js`.
+  - Node standard library only; conservative transforms that preserve ES module `import`/`export` and Turbo wiring. The vendored `assets/js/vendor/turbo.js` is never touched.
+  - Also exposed as `npm run build`.
+- **Phase 2 Verification (`tools/phase2-check.mjs`)**:
+  - Enforces `theme.json` as the single token source (no raw token redefinitions/hexes in `style.css`, `site.css`, `editor-style.css`).
+  - Confirms self-hosted WOFF2 fonts exist and are referenced by `fonts.css`, with no runtime Google Fonts / external font / CDN URLs.
+  - Confirms the minified builds are in sync with their sources (run `node tools/build-theme.mjs` to repair).
+  - Also exposed as `npm run test:phase2`.
+- **Font Fetch (`tools/fetch-fonts.mjs`)** (maintainers only): re-downloads and regenerates the self-hosted WOFF2 bundle and `fonts.css`. Also exposed as `npm run fonts`.
+- **Comprehensive QA Runner (`tools/qa-check.mjs`)**: Validates that every local `href`/`src` in the static pages resolves, flags dead `href="#"` controls and images without `alt`, and reports asset sizes. Also exposed as `npm run test:qa` (and `npm test` runs QA + contrast).
 
 ---
 
