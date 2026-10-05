@@ -1,0 +1,199 @@
+# Theme System Specification: Artupski WordPress Theme
+
+## 1. Theme Configuration & Core Initialization
+
+Artupski initializes via a clean, OOP-driven service container pattern in `functions.php`. The theme uses `inc/class-theme.php` to manage WordPress setup hooks and feature registrations.
+
+### 1.1 Theme Support Registrations
+```php
+/**
+ * Core Theme Setup Handler
+ */
+public function setup() {
+    // Enable HTML5 semantic markup support
+    add_theme_support( 'html5', array(
+        'search-form',
+        'comment-form',
+        'comment-list',
+        'gallery',
+        'caption',
+        'style',
+        'script',
+    ) );
+
+    // Document title management
+    add_theme_support( 'title-tag' );
+
+    // Post thumbnails with architectural aspect ratio crops
+    add_theme_support( 'post-thumbnails' );
+    add_image_size( 'dossier-hero', 1920, 1280, true );       // 3:2 Hero ratio
+    add_image_size( 'dossier-portrait', 1400, 1750, true );   // 4:5 Facade/Portrait ratio
+    add_image_size( 'dossier-gallery', 1200, 900, true );     // 4:3 Gallery ratio
+    add_image_size( 'dossier-thumb', 400, 300, true );        // Carousel thumbnail
+
+    // Register navigation menu locations
+    register_nav_menus( array(
+        'primary' => __( 'Primary Nav (Header)', 'artupski' ),
+        'footer'  => __( 'Footer Navigation', 'artupski' ),
+    ) );
+
+    // Block editor styling and Gutenberg features
+    add_theme_support( 'editor-styles' );
+    add_editor_style( 'assets/css/editor-style.css' );
+    add_theme_support( 'responsive-embeds' );
+    add_theme_support( 'wp-block-styles' );
+    add_theme_support( 'align-wide' );
+}
+```
+
+---
+
+## 2. Asset Pipeline & Enqueue Architecture
+
+All asset handling is encapsulated in `inc/class-assets.php`. Assets are enqueued with strict caching, preloading of essential fonts, and conditional execution.
+
+```php
+public function enqueue_frontend_assets() {
+    // 1. Google Fonts Preconnect & Enqueue (Newsreader, Manrope, IBM Plex Mono)
+    wp_enqueue_style(
+        'artupski-fonts',
+        'https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap',
+        array(),
+        null
+    );
+
+    // 2. Production Stylesheet (Audited CSS Tokens & Layout rules)
+    $css_file = is_user_logged_in() || WP_DEBUG ? 'assets/css/site.css' : 'assets/css/site.min.css';
+    wp_enqueue_style(
+        'artupski-site',
+        get_template_directory_uri() . '/' . $css_file,
+        array(),
+        ARTUPSKI_VERSION
+    );
+
+    // 3. Dynamic Customizer Styles Injection
+    $dynamic_css = $this->generate_customizer_css();
+    wp_add_inline_style( 'artupski-site', $dynamic_css );
+
+    // 4. JavaScript Engine (Turbo Drive + Event Delegation + Component Logic)
+    $js_file = is_user_logged_in() || WP_DEBUG ? 'assets/js/site.js' : 'assets/js/site.min.js';
+    wp_enqueue_script(
+        'artupski-site',
+        get_template_directory_uri() . '/' . $js_file,
+        array(),
+        ARTUPSKI_VERSION,
+        array(
+            'in_footer' => true,
+            'strategy'  => 'defer',
+        )
+    );
+}
+```
+
+### Module Script Loading Hook
+Because `site.js` uses ES module syntax (`await import(...)` for Turbo Drive), the theme attaches `type="module"` to the script tag:
+```php
+public function add_module_type_attribute( $tag, $handle, $src ) {
+    if ( 'artupski-site' === $handle ) {
+        return '<script type="module" src="' . esc_url( $src ) . '" id="artupski-site-js"></script>';
+    }
+    return $tag;
+}
+add_filter( 'script_loader_tag', array( $this, 'add_module_type_attribute' ), 10, 3 );
+```
+
+---
+
+## 3. Template Hierarchy & Rendering Engine
+
+Artupski adheres strictly to the native WordPress Template Hierarchy while delegating UI section rendering to reusable component templates located in `template-parts/components/`.
+
+```
+Standard Page Request
+       │
+       ├──► Front Page Request ──────────► front-page.php
+       │                                     ├──► template-parts/components/hero.php
+       │                                     ├──► template-parts/components/editorial-split.php
+       │                                     ├──► template-parts/components/fact-counter.php
+       │                                     └──► template-parts/components/carousel.php
+       │
+       ├──► Single Project CPT ──────────► single-rt_project.php
+       │                                     ├──► template-parts/components/section-header.php
+       │                                     ├──► template-parts/components/project-specs.php
+       │                                     └──► template-parts/components/lightbox.php
+       │
+       ├──► Chronological Archive ────────► archive-rt_project.php
+       │                                     ├──► template-parts/components/project-row.php (Loop)
+       │                                     └──► template-parts/components/pagination.php
+       │
+       └──► Generic Page / Fallback ─────► page.php / index.php
+                                             └──► template-parts/content/content-page.php
+```
+
+---
+
+## 4. Reusable Component Contracts & Partial Specs
+
+Each component template receives input through `$args` passed via `get_template_part( $slug, $name, $args )`.
+
+### 4.1 Section Header Component (`template-parts/components/section-header.php`)
+```php
+<?php
+/**
+ * Component: Section Header
+ * 
+ * @var array $args {
+ *     @type string $number Numbered index label (e.g. "01 / Overview")
+ *     @type string $title  Section heading text
+ *     @type string $meta   Right-aligned metadata annotation (e.g. "2003 to 2024")
+ * }
+ */
+$number = ! empty( $args['number'] ) ? $args['number'] : '';
+$title  = ! empty( $args['title'] )  ? $args['title']  : '';
+$meta   = ! empty( $args['meta'] )   ? $args['meta']   : '';
+?>
+<div class="section-title-row" data-reveal>
+    <div class="section-head">
+        <?php if ( $number ) : ?>
+            <span class="sec-num"><?php echo esc_html( $number ); ?></span>
+        <?php endif; ?>
+        <?php if ( $title ) : ?>
+            <h2><?php echo esc_html( $title ); ?></h2>
+        <?php endif; ?>
+    </div>
+    <?php if ( $meta ) : ?>
+        <p class="meta"><?php echo esc_html( $meta ); ?></p>
+    <?php endif; ?>
+</div>
+```
+
+### 4.2 Fact Counter Component (`template-parts/components/fact-counter.php`)
+```php
+<?php
+/**
+ * Component: Fact Counter
+ * 
+ * @var array $args {
+ *     @type string $number Numeric metric (e.g. "45")
+ *     @type string $label  Baseline label (e.g. "Listed projects")
+ *     @type string $note   Footnote explanation
+ * }
+ */
+?>
+<div class="fact">
+    <span class="fact__num" data-reveal><?php echo esc_html( $args['number'] ?? '' ); ?></span>
+    <span class="fact__label"><?php echo esc_html( $args['label'] ?? '' ); ?></span>
+    <?php if ( ! empty( $args['note'] ) ) : ?>
+        <p class="fact__note"><?php echo esc_html( $args['note'] ); ?></p>
+    <?php endif; ?>
+</div>
+```
+
+---
+
+## 5. Navigation & Active State Management
+
+Header navigation rendering handles active page states seamlessly across both initial HTTP server hits and dynamic Turbo client-side transitions.
+
+1. **Server-Side Active State**: `header.php` invokes `wp_nav_menu()` with custom walker `Artupski_Nav_Walker` which applies `data-nav-link="filename"` attributes matching page slugs.
+2. **Client-Side Active Recomputation**: Upon `turbo:load`, `site.js` extracts current `window.location.pathname`, compares against `[data-nav-link]`, and sets `aria-current="page"` dynamically.
