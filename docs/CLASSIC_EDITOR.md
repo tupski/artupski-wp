@@ -2,12 +2,20 @@
 
 ## 1. Overview & Backward Compatibility Philosophy
 
-While modern WordPress sites leverage Gutenberg, many enterprise teams, heritage organizations, and long-standing agencies prefer the speed, simplicity, and rock-solid stability of the **Classic Editor (TinyMCE)**.
+**Gutenberg is the primary authoring experience.** The Classic Editor is a **compatibility / fallback experience**, not a parallel content system.
 
-Artupski guarantees 100% feature parity for Classic Editor users without breaking layouts or introducing bloated shortcode dependency traps:
-- Every core section pattern (Section Headers, Fact Bars, Editorial Splits, Carousels, and Dossier Cards) is accessible via lightweight **Native Shortcodes**.
-- The TinyMCE WYSIWYG editor is loaded with custom typography formats, color buttons, and an inline live stylesheet matching the front-end Dossier design system.
-- Standard WordPress formatting filters (`wpautop`, `wp_kses_post`) are handled cleanly with zero unwanted paragraph tag injections around structural div wrappers.
+```text
+Gutenberg    →  Primary authoring experience
+Classic Editor  →  Compatibility / fallback experience
+```
+
+Artupski's Classic Editor support is deliberately scoped:
+- **Standard WordPress content must render correctly.** Core formatting (`the_content()`), headings, lists, images, blockquotes, and tables all render properly under the Dossier design system.
+- The TinyMCE WYSIWYG editor is loaded with a small set of custom typography formats and an inline live stylesheet matching the front-end Dossier design system, so classic content visually matches.
+- **Shortcodes are provided only where they provide genuine value or satisfy a legacy/compatibility requirement.** Artupski does NOT create a shortcode equivalent for every Gutenberg pattern merely for architectural symmetry, and does NOT maintain two content systems that must be synchronized forever.
+- Standard WordPress formatting filters (`wpautop`, `wp_kses_post`) are handled cleanly with zero unwanted paragraph tag injections around structural wrappers.
+
+> **Rationale:** duplicating every block pattern as a shortcode creates permanent maintenance debt and a second content system. The primary path is Gutenberg; classic users get correct rendering plus a small, high-value set of helpers.
 
 ---
 
@@ -63,64 +71,61 @@ add_filter( 'tiny_mce_before_init', array( $this, 'add_tinymce_styles' ) );
 
 ---
 
-## 3. Shortcode Architecture & Implementation
+## 3. Shortcode Architecture & Scope
 
-Shortcodes are designed to wrap or output standard component partials (`template-parts/components/*.php`), ensuring zero code duplication between Block Patterns and Classic content.
+### 3.1 Scope Rule
 
-### 3.1 `[rt_section_header]`
-Outputs the numbered section badge and title row:
-- **Attributes**:
-  - `number`: (e.g. `01 / Overview`)
-  - `title`: (e.g. `Project experience at a glance.`)
-  - `meta`: (e.g. `2003 to 2024`)
-- **Usage Example**:
-  ```text
-  [rt_section_header number="01 / Overview" title="Project experience at a glance." meta="2003 to 2024"]
-  ```
+A shortcode is only added when it meets at least one of these criteria:
+1. It renders **dynamic data** that plain HTML cannot express (e.g. a query-driven carousel of media attachments).
+2. It satisfies a **legacy/compatibility requirement** (existing content, client constraints).
+3. It provides **genuine value** that outweighs its maintenance cost.
 
-### 3.2 `[rt_facts]` & `[rt_fact]`
-Outputs responsive technical metric cards:
-- **Usage Example**:
-  ```text
-  [rt_facts]
-    [rt_fact number="45" label="Listed projects" note="Unique projects recorded in the history below."]
-    [rt_fact number="21" label="Years on record" note="Continuous contracting history spanning two decades."]
-    [rt_fact number="30+" label="Years in business" note="Established in Jakarta in 1992."]
-  [/rt_facts]
-  ```
+There is intentionally **no 1:1 shortcode for each block pattern**. Static patterns (hero, section header, editorial split, facts bar) are authored in Gutenberg; classic users can recreate equivalent structure with standard HTML + the CSS utility classes already provided (`.section-title-row`, `.facts`, `.fact`, `.ink-band`, `.editorial`, …), or use the small number of shortcodes below.
 
-### 3.3 `[rt_editorial_split]`
-Creates the asymmetric two-column dossier monograph layout:
-- **Usage Example**:
-  ```text
-  [rt_editorial_split number="01 / Company" meta="Who we are"]
-    <p class="lede">PT RAJATUA does various jobs in the field of general procurement construction...</p>
-    <p>Our company is supported by human resources who are reliable and professional...</p>
-  [/rt_editorial_split]
-  ```
+Shortcodes that ARE justified are thin wrappers over presentation template parts (`template-parts/components/*.php`), so no markup is duplicated.
 
-### 3.4 `[rt_carousel]`
+### 3.2 Justified Shortcodes
+
+| Shortcode | Justification | Backed by |
+|---|---|---|
+| `[artupski_carousel]` | Renders **dynamic** media-attachment data (query + interaction) that plain HTML cannot express | `template-parts/components/carousel.php` |
+| `[artupski_project_list]` | Renders a **dynamic** query of `artupski_project` records with taxonomy filtering | `template-parts/components/project-row.php` |
+
+#### `[artupski_carousel]`
 Renders a category-scoped image gallery carousel:
 - **Attributes**:
   - `group`: Unique group slug (e.g. `commercial`, `interior`, `industrial`)
   - `ids`: Comma-separated WordPress media attachment IDs
 - **Usage Example**:
   ```text
-  [rt_carousel group="interior" ids="101,102,103,104"]
+  [artupski_carousel group="interior" ids="101,102,103,104"]
   ```
+
+#### `[artupski_project_list]`
+Renders a filtered list of project records (dynamic query):
+- **Attributes**:
+  - `category`: `artupski_project_category` term slug
+  - `year`: `artupski_project_year` term slug
+  - `limit`: Maximum number of records
+- **Usage Example**:
+  ```text
+  [artupski_project_list category="interior" limit="10"]
+  ```
+
+> Static visual patterns (Section Header, Facts Bar, Editorial Split, Hero, Dossier Cards) do **not** receive shortcodes. They are authored natively in Gutenberg, and the Classic Editor styles the equivalent standard HTML through shared CSS classes.
 
 ---
 
 ## 4. Shortcode Anti-`wpautop` Filter Hygiene
 
-WordPress classic content filters frequently wrap empty linebreaks with `<p></p>` tags, which can invalidate structural divs. Artupski sanitizes shortcode rendering via a dedicated cleaning filter:
+WordPress classic content filters frequently wrap empty linebreaks with `<p></p>` tags, which can invalidate structural divs. Artupski sanitizes the (small) set of block-level shortcodes via a dedicated cleaning filter:
 
 ```php
 /**
- * Remove rogue paragraph wrappers around block shortcodes
+ * Remove rogue paragraph wrappers around block-level shortcodes
  */
 public function clean_shortcode_unautop( $content ) {
-    $block_shortcodes = array( 'rt_facts', 'rt_editorial_split', 'rt_carousel', 'rt_section_header' );
+    $block_shortcodes = array( 'artupski_carousel', 'artupski_project_list' );
     $pattern = get_shortcode_regex( $block_shortcodes );
     return preg_replace_callback( "/$pattern/s", function( $matches ) {
         return shortcode_unautop( $matches[0] );
@@ -133,9 +138,10 @@ add_filter( 'the_content', array( $this, 'clean_shortcode_unautop' ), 1 );
 
 ## 5. Metabox Wiring for Non-Gutenberg Workflows
 
-For post types such as `rt_project`, `rt_team`, and `rt_service`, editors working in Classic Editor mode are presented with clean, native WordPress meta boxes located in `edit-form-advanced.php`:
-- Project Year (`select` dropdown from registered year taxonomy)
-- Scope / Discipline (`checkbox` group: Construction, Engineering, Interior)
+For post types such as `artupski_project`, `artupski_team`, and `artupski_service`, editors are presented with clean, native WordPress meta boxes. These meta boxes live in the companion plugin (`artupski-core`) and are shown regardless of editor, since they describe **content model** data (not presentation):
+- Project Category (`select` from the primary `artupski_project_category` taxonomy)
+- Project Year (`select` from the `artupski_project_year` taxonomy)
+- Project Scope (single-line descriptive text input — not a taxonomy)
 - Project Location (Single line text input)
 - Client Name (Single line text input)
 - Blueprint / Image Callout Notes (Textarea)

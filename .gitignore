@@ -4,7 +4,16 @@ server.log
 .DS_Store
 Thumbs.db
 
+# Node / tooling
+node_modules/
+.turbo-tmp/
+
 # Optional build output (regenerate with: node tools/minify.mjs)
 # Uncomment to keep generated minified files out of version control:
 # assets/css/site.min.css
 # assets/js/site.min.js
+
+# Optional theme build output (regenerate with: node tools/build-theme.mjs)
+# Uncomment to keep generated theme minified files out of version control:
+# wp-content/themes/artupski/assets/css/site.min.css
+# wp-content/themes/artupski/assets/js/site.min.js

@@ -2,7 +2,7 @@
 
 ## 1. Customizer Architecture & Principles
 
-Artupski provides deep visual and structural customization without requiring external page builders. The customization system is built upon three core tenets:
+Artupski provides deep visual and structural customization without requiring external page builders. The customization system is presentation-only (owned by the theme) and is built upon three core tenets:
 1. **CSS Custom Properties as Source of Truth**: All Customizer controls map directly to native CSS variables defined in `:root` (e.g. `--ink`, `--paper`, `--crimson`, `--rule`).
 2. **Instant Live Preview (`postMessage`)**: Changes to color tokens, typography scales, layout widths, and header toggles update in real time in the Customizer preview pane via `assets/js/customizer-preview.js`.
 3. **Child Theme & Code Overridability**: Every setting can be pre-filtered using the `artupski_customizer_defaults` filter hook.
@@ -45,8 +45,8 @@ A dropdown option (`artupski_palette_preset`) allows 1-click theme mood switchin
 |---|---|---|---|
 | `artupski_header_layout` | Select | `standard` | `standard` (Horizontal), `centered` (Editorial Stack), `minimal` |
 | `artupski_header_sticky` | Checkbox | `false` | Enable persistent sticky header on scroll |
-| `artupski_wordmark_text` | Text | `PT. RAJA TUA`| Custom text wordmark (used if no logo image uploaded) |
-| `artupski_wordmark_accent`| Text | `TUA` | Segment of wordmark wrapped in accent color `<span>` |
+| `artupski_wordmark_text` | Text | `PT. CONTRACTOR`| Custom text wordmark (used if no logo image uploaded) |
+| `artupski_wordmark_accent`| Text | `CONTRACTOR` | Segment of wordmark wrapped in accent color `<span>` |
 | `artupski_menu_cta_show` | Checkbox | `false` | Optional quick contact button in navigation |
 
 ### 2.4 Section: Layout & Spacing (`artupski_layout`)
@@ -59,9 +59,11 @@ A dropdown option (`artupski_palette_preset`) allows 1-click theme mood switchin
 ### 2.5 Section: Client-Side Turbo Navigation (`artupski_turbo`)
 | Setting ID | Control Type | Default Value | Description |
 |---|---|---|---|
-| `artupski_turbo_enabled`| Checkbox | `true` | Enable Hotwire Turbo Drive SPA navigation |
+| `artupski_turbo_enabled`| Checkbox | `true` | Enable the locally bundled Turbo Drive enhancement. When disabled, normal WordPress navigation is used. |
 | `artupski_turbo_cache` | Checkbox | `true` | Enable Turbo client-side cache restoration |
 | `artupski_reduced_motion`| Checkbox | `false` | Force reduce-motion across the entire site |
+
+> Turbo is loaded from the **local bundle** (`assets/js/vendor/turbo.js`), never a CDN. It is progressive enhancement only: disabling it, or having JavaScript unavailable, MUST leave normal WordPress multi-page navigation fully functional.
 
 ---
 

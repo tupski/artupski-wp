@@ -1,6 +1,6 @@
 # Design System & Token Specification: Artupski WordPress Theme
 
-## 1. Concept & Visual Identity: "Raja Tua Dossier"
+## 1. Concept & Visual Identity: "Contractor Dossier"
 
 Artupski embodies an **editorial engineering monograph / technical dossier**. Its visual voice conveys credibility forged through blueprints, engineering specifications, site paperwork, and three decades of physical construction craft since 1992.
 
@@ -111,7 +111,7 @@ Large numeric callout positioned above an uppercase label and descriptive note:
 <div class="fact">
   <span class="fact__num" data-reveal>30+</span>
   <span class="fact__label">Years in business</span>
-  <p class="fact__note">Established in Jakarta in 1992 under Ir. Urat Sitohang.</p>
+  <p class="fact__note">Established in Jakarta in 1992 and still family-led today.</p>
 </div>
 ```
 

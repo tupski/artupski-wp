@@ -91,7 +91,7 @@ public function enqueue_frontend_assets() {
 ```
 
 ### Module Script Loading Hook
-Because `site.js` uses ES module syntax (`await import(...)` for Turbo Drive), the theme attaches `type="module"` to the script tag:
+Because `site.js` uses ES module syntax (it statically imports the **locally bundled** Turbo from the theme's own asset directory — never a CDN), the theme attaches `type="module"` to the script tag:
 ```php
 public function add_module_type_attribute( $tag, $handle, $src ) {
     if ( 'artupski-site' === $handle ) {
@@ -101,6 +101,14 @@ public function add_module_type_attribute( $tag, $handle, $src ) {
 }
 add_filter( 'script_loader_tag', array( $this, 'add_module_type_attribute' ), 10, 3 );
 ```
+
+> **Local Turbo bundle:** Turbo is committed to `assets/js/vendor/turbo.js` (pinned version) and referenced from `site.js`. There is no runtime CDN request. If the bundle is absent or fails to initialize, `site.js` degrades gracefully to normal WordPress navigation.
+
+### Turbo is Progressive Enhancement
+- **Turbo is enabled by default** (`artupski_turbo_enabled` defaults to `true`).
+- Turbo is enqueued as an enhancement layer, not a requirement.
+- If JavaScript is unavailable, Turbo is disabled (Customizer toggle), or the local bundle is missing/blocked/fails, **normal WordPress multi-page navigation must work correctly**. This documented fallback is a first-class requirement.
+- No theme template may depend on a Turbo lifecycle event to render required content server-side.
 
 ---
 
@@ -117,12 +125,12 @@ Standard Page Request
        │                                     ├──► template-parts/components/fact-counter.php
        │                                     └──► template-parts/components/carousel.php
        │
-       ├──► Single Project CPT ──────────► single-rt_project.php
+       ├──► Single Project CPT ──────────► single-artupski_project.php
        │                                     ├──► template-parts/components/section-header.php
        │                                     ├──► template-parts/components/project-specs.php
        │                                     └──► template-parts/components/lightbox.php
        │
-       ├──► Chronological Archive ────────► archive-rt_project.php
+       ├──► Chronological Archive ────────► archive-artupski_project.php
        │                                     ├──► template-parts/components/project-row.php (Loop)
        │                                     └──► template-parts/components/pagination.php
        │
@@ -133,6 +141,8 @@ Standard Page Request
 ---
 
 ## 4. Reusable Component Contracts & Partial Specs
+
+These are **presentation components** implemented as **PHP template parts** (see [`ARCHITECTURE.md`](docs/ARCHITECTURE.md:169) §3 for the distinction between presentation components, content models, and implementation mechanisms). They are intentionally generic: they accept data via `$args` and must not contain demo-specific logic.
 
 Each component template receives input through `$args` passed via `get_template_part( $slug, $name, $args )`.
 

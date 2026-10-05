@@ -45,7 +45,7 @@ All state-modifying actions (customizer updates, meta box saving, demo importing
 ```php
 public function save_project_meta( $post_id ) {
     // 1. Verify Nonce
-    if ( ! isset( $_POST['rt_project_nonce'] ) || ! wp_verify_nonce( $_POST['rt_project_nonce'], 'rt_save_project_data' ) ) {
+    if ( ! isset( $_POST['artupski_project_nonce'] ) || ! wp_verify_nonce( $_POST['artupski_project_nonce'], 'artupski_save_project_data' ) ) {
         return;
     }
 
@@ -60,8 +60,8 @@ public function save_project_meta( $post_id ) {
     }
 
     // 4. Sanitize and save fields
-    if ( isset( $_POST['rt_project_location'] ) ) {
-        update_post_meta( $post_id, '_rt_project_location', sanitize_text_field( wp_unslash( $_POST['rt_project_location'] ) ) );
+    if ( isset( $_POST['artupski_project_location'] ) ) {
+        update_post_meta( $post_id, '_artupski_project_location', sanitize_text_field( wp_unslash( $_POST['artupski_project_location'] ) ) );
     }
 }
 ```

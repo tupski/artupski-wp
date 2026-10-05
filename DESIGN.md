@@ -1,6 +1,6 @@
-# PT. RAJA TUA - Design Direction
+# Contractor - Design Direction
 
-**"RAJA TUA DOSSIER"** - an editorial heritage dossier for a 30+ year Indonesian construction, engineering and interior firm.
+**"CONTRACTOR DOSSIER"** - an editorial heritage dossier for a 30+ year Indonesian construction, engineering and interior firm.
 
 Design Read: *premium corporate / architectural redesign in an editorial heritage dossier language (warm paper ground, ink text, restrained crimson accent, serif display + technical grotesque), dial ENERGY 2 / RHYTHM 3 / MOTION 2.*
 
@@ -42,7 +42,7 @@ An engineering monograph / technical dossier, not a dark-industrial template. Wa
 - Max content width **1280px**; fluid gutters `clamp(1.25rem, 5vw, 4rem)`.
 - Spacing on a 4px base with generous section padding `clamp(4.5rem, 10vw, 9rem)`.
 - Hairline rules as section separators; one focal point per screen; whitespace used structurally.
-- **Varied composition per section** (no repeated centred-title + card-grid): editorial splits, numbered discipline rows, a full-bleed ink band with an oversized year, a pull-quote motto, an asymmetric gallery, a text-forward contact split.
+- **Varied composition per section** (no repeated centred-title + card-grid): editorial splits, numbered category rows, a full-bleed ink band with an oversized year, a pull-quote motto, an asymmetric gallery, a text-forward contact split.
 
 **Why:** the brief is a redesign, so section rhythm had to change page to page or the page reads as a template.
 
@@ -62,7 +62,7 @@ Numbered sections (`01 / Company`, `02 / Specialization`, ...) plus hairline rul
 ## Imagery
 
 - Warm, architectural, construction/engineering/interior photography only, downloaded locally into `assets/images/`.
-- The portfolio is an **explicitly labelled concept gallery** (representative imagery, not PT. RAJA TUA projects).
+- The projects gallery is an **explicitly labelled concept gallery** (representative imagery, not actual client projects).
 - Every image has a truthful `alt` describing what is actually depicted, deliberate `object-position`, fixed `width`/`height`, and `loading="lazy"` below the fold (hero is eager + `fetchpriority="high"`).
 
 **Why:** no original project assets were available, so honesty about provenance is a design requirement, not a footnote.

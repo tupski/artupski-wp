@@ -62,9 +62,9 @@ When configured via Customizer, Google Fonts are disabled and replaced with loca
 
 ---
 
-## 4. Hotwire Turbo Drive Caching & Memory Hygiene
+## 4. Turbo Drive Caching & Memory Hygiene
 
-Turbo Drive caches visited pages in memory to deliver instantaneous back/forward and sub-50ms repeat page transitions. To prevent memory leaks and broken component states across long sessions:
+Turbo Drive is a **locally bundled** asset (pinned version, no runtime CDN) and is a **progressive enhancement** — normal WordPress navigation works when it is absent. It caches visited pages in memory to deliver instantaneous back/forward and sub-50ms repeat page transitions. To prevent memory leaks and broken component states across long sessions:
 
 ### 4.1 State Reset Before Cache Snapshot
 ```javascript
@@ -99,4 +99,4 @@ Per-page execution in `site.js` verifies `document.body.dataset.initialized` bef
 |---|---|---|---|---|
 | Main Stylesheet | `assets/css/site.css` | `assets/css/site.min.css` | **~11 KB** | Non-render-blocking, inline critical variables |
 | Core Runtime JS | `assets/js/site.js` | `assets/js/site.min.js` | **~4.8 KB** | Deferred module execution (`type="module"`) |
-| Hotwire Turbo | CDN / Local Bundle | Local cached ESM bundle | **~24 KB** | Dynamic asynchronous `import()` |
+| Hotwire Turbo | Local bundle (`assets/js/vendor/turbo.js`) | Local cached ESM bundle | **~24 KB** | Static local `import()`; no runtime CDN |

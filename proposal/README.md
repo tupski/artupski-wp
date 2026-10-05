@@ -1,7 +1,7 @@
-# PT Raja Tua, Website Redesign Proposal
+# Website Redesign Proposal (Generic)
 
 An interactive, bilingual, theme-aware single-page proposal prepared by
-**Artupski** for **PT Raja Tua**.
+**Artupski** for a **Contractor** reference client.
 
 It is a static, additive deliverable: HTML, CSS and vanilla JavaScript only. It
 lives in `proposal/` and does not touch, copy or modify any existing site file.

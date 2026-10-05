@@ -2,7 +2,7 @@
 
 ## 1. Overview & Testing Philosophy
 
-Quality assurance for Artupski is structured across automated CLI pipelines, browser accessibility audits, cross-browser rendering tests, and functional WordPress lifecycle verification. Every component from the static Raja Tua baseline must pass stringent validation before production tagging.
+Quality assurance for Artupski is structured across automated CLI pipelines, browser accessibility audits, cross-browser rendering tests, and functional WordPress lifecycle verification. Every component from the static Contractor baseline must pass stringent validation before production tagging.
 
 ---
 
@@ -78,13 +78,36 @@ Quality assurance for Artupski is structured across automated CLI pipelines, bro
 - [ ] Form submission or external links navigate via full HTTP request.
 - [ ] Disabling JavaScript loads all pages cleanly with visible reveal content (via `<noscript>` fallback).
 
-### 3.4 Gutenberg & Classic Editor Parity
+### 3.4 Gutenberg & Classic Editor
 - [ ] Inserting Block Pattern `artupski/hero-drafting` matches front-end output.
 - [ ] Core block styles (`ink-band`, `paper-boxed`, `lede`) apply expected CSS classes.
-- [ ] Classic Editor shortcodes `[rt_section_header]`, `[rt_facts]`, `[rt_editorial_split]` render identically to patterns.
+- [ ] **Standard Classic Editor content** (headings, lists, images, quotes, tables) renders correctly under the Dossier design system.
+- [ ] The justified shortcodes (`[artupski_carousel]`, `[artupski_project_list]`) render correctly and match their pattern equivalents.
+- [ ] No shortcode exists purely to mirror a static pattern (scope rule upheld).
 - [ ] Saving post meta via custom meta boxes updates post data without sanitization loss.
 
 ### 3.5 Demo Importer Verification
 - [ ] 1-click import completes in under 60 seconds on standard execution limits.
-- [ ] Re-running import does not duplicate pages or projects.
+- [ ] **`wp artupski demo import contractor`** and the admin wizard produce identical results (same shared service).
+- [ ] Re-running import does not duplicate pages, projects, media, or menus (idempotency).
+- [ ] Duplicate detection flags existing demo-owned entities correctly.
+- [ ] Rollback removes all entities flagged with `_artupski_demo_id`.
 - [ ] Media attachments import with correct `alt` attributes and dimensions.
+- [ ] Admin import is blocked without a valid nonce or sufficient capability.
+- [ ] Progress is reported in both the admin UI and WP-CLI output.
+
+### 3.6 Visual Fidelity (Static Baseline vs. WordPress)
+The static site is the visual source of truth. Compare the `static` branch against the WordPress implementation:
+- [ ] Layout
+- [ ] Typography
+- [ ] Colors
+- [ ] Spacing
+- [ ] Imagery
+- [ ] Responsive behavior
+- [ ] Interactions
+- [ ] Navigation
+- [ ] Gallery
+- [ ] Lightbox
+- [ ] Animations
+- [ ] Accessibility states
+- [ ] Any deviation is intentional and documented.

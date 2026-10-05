@@ -2,9 +2,33 @@
 
 ## 1. Overview & Strategy
 
-Artupski leverages core WordPress Block Editor capabilities without relying on heavy third-party block plugins (like Elementor or ACF Pro Blocks). The theme follows a **Block Pattern First** strategy:
-- Standard Core Blocks (`core/group`, `core/columns`, `core/heading`, `core/paragraph`, `core/image`) are styled to match the Dossier Design System via custom Block Styles and `theme.json`.
-- Complex layouts from the Raja Tua audit (Drafting Hero, Editorial Split, Facts Bar, Numbered Index Sections, Categorized Gallery Carousels) are delivered as native **Block Patterns**.
+Artupski leverages core WordPress Block Editor capabilities without relying on heavy third-party block plugins (like Elementor or ACF Pro Blocks).
+
+**Gutenberg is the primary authoring experience.** The Classic Editor is a compatibility/fallback experience (see [`CLASSIC_EDITOR.md`](docs/CLASSIC_EDITOR.md:1)). The architecture is:
+
+```text
+Gutenberg
+    ↓
+Primary authoring experience
+
+Classic Editor
+    ↓
+Compatibility / fallback experience
+```
+
+Gutenberg should use:
+- **native blocks** (`core/group`, `core/columns`, `core/heading`, `core/paragraph`, `core/image`, …)
+- **block patterns** for composed layouts
+- **template parts** for reusable structural regions
+- **`theme.json`** for design tokens
+
+> **Full Site Editing (FSE) is OUT OF SCOPE for v1.** v1 is NOT a full block/FSE theme. Block templates/template parts are kept **only** where they support the planned architecture without turning the project into FSE; classic PHP templates remain the rendering backbone. Do not add a full block-theme structure (`templates/`, `parts/`) that would make the project FSE.
+
+Strategy:
+- Standard Core Blocks are styled to match the Dossier Design System via custom Block Styles and `theme.json`.
+- Complex layouts from the static audit (Drafting Hero, Editorial Split, Facts Bar, Numbered Index Sections, Categorized Gallery Carousels) are delivered as native **Block Patterns**.
+- Patterns are **generic templates**: they provide structure and styling. Demo content (e.g. Contractor, Demo #1) fills them via the demo importer. Patterns must not encode demo-specific logic — the sample copy shown below is illustrative of how the demo populates a pattern, not a theme dependency.
+- Shortcodes are NOT a mirrored twin of every pattern. See [`CLASSIC_EDITOR.md`](docs/CLASSIC_EDITOR.md:1) for the (deliberately small) set of shortcodes that provide genuine value.
 
 ---
 
@@ -14,7 +38,7 @@ Block patterns are registered under the category `artupski-dossier` in `inc/clas
 
 ### 2.1 Hero: Monograph Drafting (`artupski/hero-drafting`)
 - **Structure**: Core Cover / Group with relative positioning, media background (`assets/images/hero-drafting.jpg`), dark scrim overlay (`rgba(22, 24, 28, 0.65)`), two-column grid.
-- **Left Column**: Eyebrow (`EST. 1992 · Jakarta · Indonesia`), Main H1 Serif (`PT. RAJA TUA`), Tagline (`Terdepan, Unik, dan Andalan.`).
+- **Left Column**: Eyebrow (`EST. 1992 · Jakarta · Indonesia`), Main H1 Serif (`PT. CONTRACTOR`), Tagline (`Forward, Distinct, Reliable.`).
 - **Right Column**: Technical firm description, text link with chevron icon, visual scroll cue.
 - **Pattern Markup Definition**:
 ```html
@@ -30,8 +54,8 @@ Block patterns are registered under the category `artupski-dossier` in `inc/clas
         <div class="hero__grid">
             <div data-reveal>
                 <p class="eyebrow">EST. 1992 &middot; Jakarta &middot; Indonesia</p>
-                <h1>PT. RAJA TUA</h1>
-                <p class="hero__tagline">Terdepan, Unik, dan Andalan.</p>
+                <h1>PT. CONTRACTOR</h1>
+                <p class="hero__tagline">Forward, Distinct, Reliable.</p>
             </div>
             <div class="hero__aside" data-reveal style="--reveal-delay:120ms">
                 <p>An Indonesian construction, engineering and interior firm building for government, state electricity, plantation, industrial and property clients since 1992.</p>
@@ -75,7 +99,7 @@ Block patterns are registered under the category `artupski-dossier` in `inc/clas
     <div class="fact">
         <span class="fact__num" data-reveal>30+</span>
         <span class="fact__label">Years in business</span>
-        <p class="fact__note">Established in Jakarta in 1992 under Ir. Urat Sitohang.</p>
+        <p class="fact__note">Established in Jakarta in 1992 and still family-led today.</p>
     </div>
 </div>
 <!-- /wp:group -->
@@ -92,8 +116,8 @@ Block patterns are registered under the category `artupski-dossier` in `inc/clas
         <p class="meta">Who we are</p>
     </div>
     <div class="editorial__body flow" data-reveal>
-        <p class="lede">PT RAJATUA does various jobs in the field of general procurement construction as well as website and application development services.</p>
-        <p>Our company is supported by human resources who are reliable and professional in their field, so we handle work carefully and always prioritize customer satisfaction.</p>
+        <p class="lede">Our firm delivers general procurement construction alongside engineering and interior services.</p>
+        <p>Our company is supported by reliable, professional human resources, so we handle every engagement carefully and always prioritize client satisfaction.</p>
     </div>
 </div>
 <!-- /wp:group -->
@@ -169,7 +193,17 @@ Artupski integrates WordPress Block Editor theming through [`theme.json`](theme.
 
 ---
 
-## 5. Editor Styling & Sandboxed Parity
+## 5. Template Parts & Block Templates
+
+**Full Site Editing (FSE) is OUT OF SCOPE for v1.** Artupski is Gutenberg-primary for authoring but renders through classic PHP templates; it is not a full block/FSE theme. Where a region is reused across multiple templates, Artupski prefers:
+- **Template Parts** (classic PHP `template-parts/`) for regions the theme renders on every request.
+- Block template parts / block templates are **not** added in v1. They may be revisited in a future version, but only if they support the planned architecture without turning the project into FSE.
+
+This keeps the theme usable on classic-theme installs while remaining block-first for authoring.
+
+---
+
+## 6. Editor Styling & Sandboxed Parity
 
 To prevent Gutenberg admin UI conflicts while preserving 100% typography fidelity inside the canvas:
 - `assets/css/editor-style.css` scopes all typography and layout rules inside `.editor-styles-wrapper`.
