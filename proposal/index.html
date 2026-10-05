@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="id" class="no-js">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Proposal Redesain Website | PT Raja Tua x Artupski</title>
+  <meta
+    name="description"
+    content="Proposal redesain website untuk PT Raja Tua: kehadiran digital yang modern untuk perusahaan konstruksi dan engineering Indonesia, disusun oleh Artupski."
+    data-i18n-attr="content:meta_desc"
+  />
+  <meta name="theme-color" content="#16181c" />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/png" href="../assets/images/rajatua-logo.png" />
+  <link rel="apple-touch-icon" href="../assets/images/rajatua-logo.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+
+  <script>
+    /* Early theme + language bootstrap. Runs before the stylesheet and body
+       render so the correct theme is applied with no flash. Defaults: theme
+       follows the system preference (else light), language is Indonesian. */
+    (function () {
+      var root = document.documentElement;
+      var theme;
+      try { theme = localStorage.getItem("proposal-theme"); } catch (e) {}
+      if (theme !== "light" && theme !== "dark") {
+        theme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      }
+      root.setAttribute("data-theme", theme);
+
+      var lang;
+      try { lang = localStorage.getItem("proposal-language"); } catch (e) {}
+      if (lang !== "id" && lang !== "en") lang = "id";
+      root.setAttribute("lang", lang);
+      root.setAttribute("data-lang", lang);
+    })();
+  </script>
+
+  <script>
+    /* Swap no-js -> js so reveal styles only apply when scripting is available. */
+    document.documentElement.classList.remove("no-js");
+    document.documentElement.classList.add("js");
+  </script>
+  <link rel="stylesheet" href="assets/css/proposal.css" />
+  <noscript>
+    <style>
+      [data-reveal] { opacity: 1 !important; transform: none !important; }
+    </style>
+  </noscript>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="skip_link">Lewati ke konten</a>
+
+  <!-- Top scroll progress indicator (hidden on print) -->
+  <div class="scroll-progress" aria-hidden="true"><span class="scroll-progress__bar" data-progress-bar></span></div>
+
+  <!-- ================= STICKY PROPOSAL NAVIGATION ================= -->
+  <header class="proposal-nav no-print" data-proposal-nav>
+    <div class="proposal-nav__inner shell">
+      <a class="proposal-nav__label" href="#cover" data-scroll-link>
+        <span class="proposal-nav__mark" aria-hidden="true"></span>
+        <span class="proposal-nav__brand">
+          <span class="proposal-nav__site">PT Raja Tua</span>
+          <span class="proposal-nav__sub" data-i18n="nav_label">Proposal</span>
+        </span>
+      </a>
+
+      <nav class="proposal-nav__nav" aria-label="Bagian proposal" data-i18n-attr="aria-label:nav_aria">
+        <ul class="proposal-nav__list" id="proposal-nav-list" data-nav-list>
+          <li><a href="#summary" data-nav-link="summary" data-i18n="nav_overview">Gambaran</a></li>
+          <li><a href="#concept" data-nav-link="concept" data-i18n="nav_concept">Konsep</a></li>
+          <li><a href="#website" data-nav-link="website" data-i18n="nav_website">Website</a></li>
+          <li><a href="#scope" data-nav-link="scope" data-i18n="nav_scope">Scope</a></li>
+          <li><a href="#timeline" data-nav-link="timeline" data-i18n="nav_timeline">Timeline</a></li>
+          <li><a href="#investment" data-nav-link="investment" data-i18n="nav_investment">Investasi</a></li>
+          <li><a href="#next" data-nav-link="next" data-i18n="nav_next">Next Steps</a></li>
+        </ul>
+      </nav>
+
+      <div class="proposal-nav__controls no-print">
+        <div class="lang-switch" role="group" aria-label="Language / Bahasa" data-i18n-attr="aria-label:lang_group_label">
+          <button type="button" class="lang-switch__btn" data-lang-btn="id" lang="id" aria-pressed="true">ID</button>
+          <button type="button" class="lang-switch__btn" data-lang-btn="en" lang="en" aria-pressed="false">EN</button>
+        </div>
+
+        <button
+          type="button"
+          class="theme-toggle"
+          data-theme-toggle
+          aria-pressed="false"
+          aria-label="Ganti tema warna"
+          data-i18n-attr="aria-label:theme_toggle_aria"
+        >
+          <span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke-linecap="round"/></svg>
+          </span>
+          <span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 14.5A8 8 0 019.5 4a8 8 0 1010.5 10.5z" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="theme-toggle__label" data-theme-label>Terang</span>
+        </button>
+      </div>
+
+      <button
+        class="proposal-nav__toggle"
+        type="button"
+        data-nav-toggle
+        aria-expanded="false"
+        aria-controls="proposal-nav-list"
+        aria-label="Buka navigasi proposal"
+      >
+        <span class="proposal-nav__toggle-txt" data-i18n="nav_toggle">Bagian</span>
+        <svg class="proposal-nav__toggle-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ================= 01 COVER ================= -->
+    <section class="cover" id="cover" aria-labelledby="cover-title">
+      <div class="shell cover__grid">
+        <div class="cover__body">
+          <p class="eyebrow" data-reveal data-i18n="cover_eyebrow">Proposal Redesain Website</p>
+          <h1 id="cover-title" class="cover__title" data-reveal style="--reveal-delay:80ms" data-i18n="cover_title">PT Raja Tua</h1>
+          <p class="cover__subtitle" data-reveal style="--reveal-delay:140ms" data-i18n="cover_subtitle">
+            Kehadiran digital yang modern untuk perusahaan konstruksi dan engineering yang terus bertumbuh.
+          </p>
+
+          <dl class="cover__meta" data-reveal style="--reveal-delay:200ms">
+            <div>
+              <dt data-i18n="cover_meta_prepared">Disiapkan oleh</dt>
+              <dd data-i18n="cover_meta_by">Artupski</dd>
+            </div>
+            <div>
+              <dt data-i18n="cover_meta_date">Tanggal</dt>
+              <dd data-i18n="cover_date">Oktober 2026</dd>
+            </div>
+            <div>
+              <dt data-i18n="cover_meta_doc">Dokumen</dt>
+              <dd data-i18n="cover_doc">Proposal Redesain Website</dd>
+            </div>
+          </dl>
+
+          <div class="cover__actions no-print" data-reveal style="--reveal-delay:260ms">
+            <a class="btn btn--solid" href="#summary" data-scroll-link>
+              <span data-i18n="cover_cta_primary">Lihat Proposal</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a class="btn" href="../">
+              <span data-i18n="cover_cta_secondary">Lihat Website Concept</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <figure class="cover__media" data-reveal style="--reveal-delay:160ms">
+          <img
+            src="../assets/images/facade-panels.jpg"
+            alt="Fasad bangunan bersudut berlapis panel batu pucat, dengan latar langit cerah"
+            data-i18n-attr="alt:cover_img_alt"
+            width="1400"
+            height="1750"
+            fetchpriority="high"
+            decoding="async"
+          />
+          <figcaption class="cover__caption">
+            <span class="meta" data-i18n="cover_caption_meta">Gambar konsep</span>
+            <span data-i18n="cover_caption_text">Gambar ilustrasi, bukan foto proyek tertentu.</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ================= 02 EXECUTIVE SUMMARY ================= -->
+    <section class="section" id="summary" tabindex="-1" aria-labelledby="summary-title" data-nav-section>
+      <div class="shell">
+        <div class="section-head" data-reveal>
+          <span class="sec-num" data-i18n="s02_num">02 &mdash; Gambaran Proyek</span>
+          <h2 id="summary-title" data-i18n="s02_title">Rumah digital yang lebih jelas dan kredibel untuk perusahaan berusia 30 tahun.</h2>
+        </div>
+
+        <div class="editorial" style="margin-top:clamp(2rem,4vw,3.2rem)">
+          <div class="editorial__aside" data-reveal>
+            <p class="lede" data-i18n="s02_lede">PT Raja Tua telah mengerjakan konstruksi, engineering, dan interior sejak 1992. Website seharusnya menyampaikan hal itu sejelas kualitas pekerjaannya.</p>
+          </div>
+          <div class="editorial__body flow" data-reveal style="--reveal-delay:120ms">
+            <p data-i18n="s02_p1">Proposal ini mengubah kehadiran online saat ini menjadi website korporat modern yang langsung menyampaikan kredibilitas, pengalaman proyek, kapabilitas, dan citra profesional. Redesain ini memberi perusahaan rumah yang tertata untuk portofolionya serta jalur langsung bagi calon klien untuk menghubungi.</p>
+            <p data-i18n="s02_p2">Tidak ada yang berubah dari perusahaannya. Yang berubah adalah cara perusahaan ditampilkan: sistem visual yang kekinian, struktur informasi yang jelas, portofolio yang lebih kuat, dan ajakan bertindak yang membuat langkah berikutnya terlihat jelas di setiap halaman.</p>
+
+            <ul class="facts" aria-label="Fakta perusahaan" data-i18n-attr="aria-label:s02_facts_aria">
+              <li class="fact">
+                <span class="fact__num">1992</span>
+                <span class="fact__label" data-i18n="s02_fact1">Didirikan di Jakarta, Indonesia</span>
+              </li>
+              <li class="fact">
+                <span class="fact__num">2003&ndash;2024</span>
+                <span class="fact__label" data-i18n="s02_fact2">Rentang rekam proyek</span>
+              </li>
+              <li class="fact">
+                <span class="fact__num">45</span>
+                <span class="fact__label" data-i18n="s02_fact3">Proyek terdaftar selama 17 tahun</span>
+              </li>
+            </ul>
+            <p class="meta" data-i18n="s02_meta">Angka ini hanya menggambarkan proyek yang tercantum di halaman Portofolio saat ini.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 03 CURRENT -> PROPOSED DIRECTION ================= -->
+    <section class="section section--band" id="direction" tabindex="-1" aria-labelledby="direction-title">
+      <div class="shell">
+        <div class="section-head" data-reveal>
+          <span class="sec-num" data-i18n="s03_num">03 &mdash; Saat Ini &rarr; Konsep yang Diusulkan</span>
+          <h2 id="direction-title" data-i18n="s03_title">Apa yang berubah, dan mengapa itu penting.</h2>
+          <p class="muted" style="max-width:64ch" data-i18n="s03_muted">Pembacaan yang jujur atas kondisi situs hari ini, dan arah yang diambil redesain ini.</p>
+        </div>
+
+        <div class="compare" style="margin-top:clamp(2.2rem,4vw,3.4rem)">
+          <article class="compare__col compare__col--current" data-reveal>
+            <header class="compare__head">
+              <span class="compare__tag" data-i18n="s03_current_tag">Saat ini</span>
+              <h3 data-i18n="s03_current_h">Kondisi situs hari ini</h3>
+            </header>
+            <ul class="compare__list">
+              <li data-i18n="s03_current_li1">Tampilan lama yang tidak lagi mencerminkan skala perusahaan.</li>
+              <li data-i18n="s03_current_li2">Hierarki yang kurang tertata, sehingga informasi penting lebih sulit ditemukan.</li>
+              <li data-i18n="s03_current_li3">Portofolio yang seharusnya lebih mudah dijelajahi.</li>
+              <li data-i18n="s03_current_li4">Kisah visual yang belum cukup dalam untuk mewakili pekerjaan.</li>
+            </ul>
+          </article>
+
+          <article class="compare__col compare__col--proposed" data-reveal style="--reveal-delay:120ms">
+            <header class="compare__head">
+              <span class="compare__tag" data-i18n="s03_proposed_tag">Diusulkan</span>
+              <h3 data-i18n="s03_proposed_h">Arah redesain ini</h3>
+            </header>
+            <ul class="compare__list">
+              <li data-i18n="s03_proposed_li1">Sistem desain korporat modern yang diterapkan secara konsisten.</li>
+              <li data-i18n="s03_proposed_li2">Struktur informasi yang jelas di empat halaman.</li>
+              <li data-i18n="s03_proposed_li3">Penyajian portofolio yang kuat, dikelompokkan menurut tahun dan kategori.</li>
+              <li data-i18n="s03_proposed_li4">Tata letak yang sepenuhnya responsif, dari ponsel hingga desktop.</li>
+              <li data-i18n="s03_proposed_li5">Penelusuran proyek yang lebih baik dan persepsi merek yang lebih kuat.</li>
+              <li data-i18n="s03_proposed_li6">Ajakan menghubungi yang jelas dan berulang.</li>
+            </ul>
+          </article>
+        </div>
+
+        <p class="compare__statement" data-reveal data-i18n="s03_statement">
+          Redesain ini berfokus pada penyajian pengalaman dan kapabilitas PT Raja Tua melalui pengalaman digital yang lebih jelas dan kekinian.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= 04 DESIGN CONCEPT ================= -->
+    <section class="section" id="concept" tabindex="-1" aria-labelledby="concept-title" data-nav-section>
+      <div class="shell">
+        <div class="section-title-row" data-reveal>
+          <div class="section-head">
+            <span class="sec-num" data-i18n="s04_num">04 &mdash; Konsep Desain</span>
+            <h2 id="concept-title" data-i18n="s04_title">Editorial, terukur, dan dibangun untuk dipercaya.</h2>
+          </div>
+          <p class="meta" data-i18n="s04_meta">Lima prinsip</p>
+        </div>
+
+        <div class="principles" style="margin-top:clamp(2rem,4vw,3.2rem)">
+          <article class="principle" data-reveal>
+            <span class="principle__num">01</span>
+            <h3 data-i18n="s04_p1_h">Profesional</h3>
+            <p data-i18n="s04_p1_p">Suara korporat yang tenang, tanpa kebisingan dan tanpa kesan template.</p>
+          </article>
+          <article class="principle" data-reveal style="--reveal-delay:70ms">
+            <span class="principle__num">02</span>
+            <h3 data-i18n="s04_p2_h">Tertata</h3>
+            <p data-i18n="s04_p2_p">Bagian bernomor, garis tipis, dan ritme yang stabil membuat halaman mudah dibaca.</p>
+          </article>
+          <article class="principle" data-reveal style="--reveal-delay:140ms">
+            <span class="principle__num">03</span>
+            <h3 data-i18n="s04_p3_h">Percaya Diri</h3>
+            <p data-i18n="s04_p3_p">Tipografi serif besar dan ruang putih yang lapang, digunakan dengan hemat dan tepat.</p>
+          </article>
+          <article class="principle" data-reveal style="--reveal-delay:210ms">
+            <span class="principle__num">04</span>
+            <h3 data-i18n="s04_p4_h">Humanis</h3>
+            <p data-i18n="s04_p4_p">Nuansa kertas yang hangat dan fotografi nyata, agar perusahaan terasa manusiawi, bukan sekadar brosur.</p>
+          </article>
+          <article class="principle" data-reveal style="--reveal-delay:280ms">
+            <span class="principle__num">05</span>
+            <h3 data-i18n="s04_p5_h">Responsif</h3>
+            <p data-i18n="s04_p5_p">Satu tata letak yang matang dan tetap utuh di ponsel, tablet, maupun layar lebar.</p>
+          </article>
+        </div>
+
+        <div class="concept-strip" style="margin-top:clamp(2.4rem,5vw,3.6rem)">
+          <figure class="concept-strip__item" data-reveal>
+            <img src="../assets/images/steel-rebar-cage.jpg" alt="Besi tulangan yang diikat menjadi kawat kandang di lokasi konstruksi" data-i18n-attr="alt:concept_img1_alt" width="1400" height="1050" loading="lazy" decoding="async" />
+          </figure>
+          <figure class="concept-strip__item" data-reveal style="--reveal-delay:100ms">
+            <img src="../assets/images/interior-meeting-room.jpg" alt="Ruang rapat kantor dengan plafon beton ekspos dan lampu gantung" data-i18n-attr="alt:concept_img2_alt" width="1400" height="1050" loading="lazy" decoding="async" />
+          </figure>
+          <p class="concept-strip__note" data-reveal style="--reveal-delay:160ms">
+            <span class="meta" data-i18n="s04_note_meta">Arah visual</span>
+            <span data-i18n="s04_note_text">Citra konstruksi, engineering, dan interior, disusun besar dan dipakai secara jujur, menyampaikan keluasan layanan perusahaan tanpa dinding teks.</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 05 WEBSITE PREVIEW ================= -->
+    <section class="section section--band" id="website" tabindex="-1" aria-labelledby="website-title" data-nav-section>
+      <div class="shell">
+        <div class="section-title-row" data-reveal>
+          <div class="section-head">
+            <span class="sec-num" data-i18n="s05_num">05 &mdash; Preview Website</span>
+            <h2 id="website-title" data-i18n="s05_title">Website yang diusulkan, halaman per halaman.</h2>
+          </div>
+          <p class="meta" data-i18n="s05_meta">Empat halaman</p>
+        </div>
+
+        <p class="muted preview-note" data-reveal style="margin-top:1.4rem" data-i18n="s05_note">
+          Pratinjau di bawah ini adalah tata letak perwakilan yang dibangun dengan citra asli perusahaan. Tujuannya menunjukkan komposisi dan hierarki, bukan naskah final atau proyek tertentu.
+        </p>
+
+        <!-- Home, the hero preview -->
+        <article class="preview preview--home" data-reveal>
+          <div class="browser">
+            <div class="browser__bar">
+              <span class="browser__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="browser__url"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3" stroke-linecap="round"/></svg><span data-i18n="s05_home_url">Beranda</span></span>
+            </div>
+            <div class="browser__view browser__view--home">
+              <img src="../assets/images/hero-drafting.jpg" alt="Seseorang menggambar tampak bangunan secara teknis dengan penggaris dan gulungan gambar di atas meja kayu" data-i18n-attr="alt:s05_home_img_alt" width="1920" height="1280" loading="lazy" decoding="async" />
+              <span class="browser__scrim" aria-hidden="true"></span>
+              <span class="browser__overlay">
+                <span class="browser__eyebrow" data-i18n="s05_home_eyebrow">Est. 1992 &middot; Jakarta &middot; Indonesia</span>
+                <span class="browser__title" data-i18n="s05_home_title">PT. RAJA TUA</span>
+                <span class="browser__sub" data-i18n="s05_home_sub">Terdepan, Unik, dan Andalan.</span>
+              </span>
+            </div>
+          </div>
+          <div class="preview__meta">
+            <h3 data-i18n="s05_home_h">Beranda</h3>
+            <p data-i18n="s05_home_p">Kesan pertama: siapa perusahaan ini, disiplin yang ditekuninya, serta jalur yang jelas menuju portofolio dan kontak.</p>
+          </div>
+        </article>
+
+        <!-- Inner pages -->
+        <div class="preview-grid" style="margin-top:clamp(1.6rem,3vw,2.4rem)">
+          <article class="preview preview--sm" data-reveal>
+            <div class="browser">
+              <div class="browser__bar">
+                <span class="browser__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                <span class="browser__url">/about-us</span>
+              </div>
+              <div class="browser__view">
+                <img src="../assets/images/planning-desk.jpg" alt="Meja perancangan dan perencanaan dengan gambar kerja dan alat gambar tertata" data-i18n-attr="alt:s05_about_img_alt" width="1400" height="1050" loading="lazy" decoding="async" />
+                <span class="browser__overlay browser__overlay--stack">
+                  <span class="browser__eyebrow" data-i18n="s05_about_eyebrow">Tentang perusahaan</span>
+                  <span class="browser__title browser__title--sm" data-i18n="s05_about_title">Tiga puluh tahun membangun, merekayasa, dan menyelesaikan.</span>
+                </span>
+              </div>
+            </div>
+            <div class="preview__meta">
+              <h3 data-i18n="s05_about_h">Tentang Kami</h3>
+              <p data-i18n="s05_about_p">Kisah sejak 1992, empat disiplin, serta visi dan misi.</p>
+            </div>
+          </article>
+
+          <article class="preview preview--sm" data-reveal style="--reveal-delay:90ms">
+            <div class="browser">
+              <div class="browser__bar">
+                <span class="browser__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                <span class="browser__url">/portfolio</span>
+              </div>
+              <div class="browser__view">
+                <img src="../assets/images/tower-cranes.jpg" alt="Derek menara di atas gedung bertingkat yang sedang dibangun" data-i18n-attr="alt:s05_port_img_alt" width="1400" height="1050" loading="lazy" decoding="async" />
+                <span class="browser__overlay browser__overlay--stack">
+                  <span class="browser__eyebrow" data-i18n="s05_port_eyebrow">Portofolio</span>
+                  <span class="browser__title browser__title--sm" data-i18n="s05_port_title">Proyek Kami</span>
+                  <span class="browser__sub" data-i18n="s05_port_sub">45 proyek &middot; 2003 hingga 2024</span>
+                </span>
+              </div>
+            </div>
+            <div class="preview__meta">
+              <h3 data-i18n="s05_port_h">Portofolio</h3>
+              <p data-i18n="s05_port_p">Pengalaman proyek menurut tahun, plus galeri kategori dengan lightbox layar penuh.</p>
+            </div>
+          </article>
+
+          <article class="preview preview--sm" data-reveal style="--reveal-delay:180ms">
+            <div class="browser">
+              <div class="browser__bar">
+                <span class="browser__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+                <span class="browser__url">/contact-us</span>
+              </div>
+              <div class="browser__view">
+                <img src="../assets/images/interior-meeting-room.jpg" alt="Ruang rapat kantor dengan plafon beton ekspos dan lampu gantung" data-i18n-attr="alt:s05_contact_img_alt" width="1400" height="1050" loading="lazy" decoding="async" />
+                <span class="browser__overlay browser__overlay--stack">
+                  <span class="browser__eyebrow" data-i18n="s05_contact_eyebrow">Kontak</span>
+                  <span class="browser__title browser__title--sm" data-i18n="s05_contact_title">Hubungi Kami</span>
+                </span>
+              </div>
+            </div>
+            <div class="preview__meta">
+              <h3 data-i18n="s05_contact_h">Kontak</h3>
+              <p data-i18n="s05_contact_p">Telepon, email, dan alamat, dengan peta perkiraan serta aksi panggilan dan email langsung.</p>
+            </div>
+          </article>
+        </div>
+
+        <div class="preview__cta no-print" data-reveal>
+          <a class="btn btn--solid" href="../">
+            <span data-i18n="s05_cta">Buka Website Concept</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <p class="meta" data-i18n="s05_cta_note">Membuka konsep website langsung di proyek ini.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 06 PROPOSED WEBSITE STRUCTURE ================= -->
+    <section class="section" id="structure" tabindex="-1" aria-labelledby="structure-title">
+      <div class="shell">
+        <div class="section-head" data-reveal>
+          <span class="sec-num" data-i18n="s06_num">06 &mdash; Struktur Website</span>
+          <h2 id="structure-title" data-i18n="s06_title">Empat halaman, satu alur yang jelas.</h2>
+          <p class="muted" style="max-width:64ch" data-i18n="s06_muted">Setiap halaman memikul satu tugas, dan semuanya mengarah ke langkah yang berguna.</p>
+        </div>
+
+        <div class="ia" style="margin-top:clamp(2.2rem,4vw,3.4rem)">
+          <article class="ia__node ia__node--root" data-reveal>
+            <span class="ia__label" data-i18n="s06_home_label">Beranda</span>
+            <p data-i18n="s06_home_p">Memperkenalkan perusahaan, disiplin yang ditekuninya, dan standar pekerjaannya, lalu mengarahkan pengunjung ke kisah, portofolio, atau kontak.</p>
+          </article>
+
+          <ul class="ia__children">
+            <li class="ia__node" data-reveal>
+              <span class="ia__label" data-i18n="s06_about_label">Tentang Kami</span>
+              <p data-i18n="s06_about_p">Menjelaskan siapa PT Raja Tua: kisah sejak 1992, empat disiplin, serta visi dan misi.</p>
+            </li>
+            <li class="ia__node ia__node--parent" data-reveal style="--reveal-delay:90ms">
+              <span class="ia__label" data-i18n="s06_port_label">Portofolio</span>
+              <p data-i18n="s06_port_p">Membuktikan pengalaman: rekam proyek kronologis dan galeri kategori dengan lightbox.</p>
+              <ul class="ia__sub">
+                <li><span class="ia__label ia__label--sub" data-i18n="s06_pe_label">Pengalaman Proyek</span><span data-i18n="s06_pe_text">Riwayat proyek tahun demi tahun, 2003 hingga 2024.</span></li>
+                <li><span class="ia__label ia__label--sub" data-i18n="s06_pg_label">Galeri Proyek</span><span data-i18n="s06_pg_text">Citra perwakilan menurut kategori, dibuka dalam lightbox.</span></li>
+              </ul>
+            </li>
+            <li class="ia__node" data-reveal style="--reveal-delay:180ms">
+              <span class="ia__label" data-i18n="s06_contact_label">Kontak</span>
+              <p data-i18n="s06_contact_p">Memudahkan kontak: telepon, email, alamat, dan peta perkiraan.</p>
+            </li>
+          </ul>
+        </div>
+
+        <p class="ia__future" data-reveal>
+          <span class="tag-future" data-i18n="s06_future_tag">Disarankan, di luar lingkup</span>
+          <span data-i18n="s06_future_text">Halaman layanan atau karier dapat ditambahkan nanti. Ini bukan bagian dari proposal ini dan hanya ditampilkan untuk menandai arah yang dituju.</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= 07 SCOPE OF WORK ================= -->
+    <section class="section section--band" id="scope" tabindex="-1" aria-labelledby="scope-title" data-nav-section>
+      <div class="shell">
+        <div class="section-title-row" data-reveal>
+          <div class="section-head">
+            <span class="sec-num" data-i18n="s07_num">07 &mdash; Ruang Lingkup Pekerjaan</span>
+            <h2 id="scope-title" data-i18n="s07_title">Apa saja yang dicakup proyek ini.</h2>
+          </div>
+          <p class="meta" data-i18n="s07_meta">Hasil kerja</p>
+        </div>
+
+        <div class="table-wrap" data-reveal style="margin-top:clamp(2rem,4vw,3rem)">
+          <p class="table-scroll-hint" data-i18n="table_scroll_hint">← Geser untuk melihat lebih →</p>
+          <div class="table-scroll" data-scroll-container>
+            <table class="scope-table">
+            <caption class="visually-hidden" data-i18n="s07_caption">Ruang lingkup pekerjaan menurut area</caption>
+            <thead>
+              <tr>
+                <th scope="col" data-i18n="s07_th_area">Area</th>
+                <th scope="col" data-i18n="s07_th_included">Termasuk dalam lingkup ini</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="rowgroup" rowspan="4" data-i18n="s07_rg_design">UI/UX & Desain</th>
+                <td data-i18n="s07_design_1">Sistem tata letak responsif untuk ponsel, tablet, dan desktop.</td>
+              </tr>
+              <tr><td data-i18n="s07_design_2">Sistem desain visual yang dapat dipakai ulang: tipografi, warna, spasi, dan komponen.</td></tr>
+              <tr><td data-i18n="s07_design_3">Desain empat halaman: Beranda, Tentang Kami, Portofolio, Kontak.</td></tr>
+              <tr><td data-i18n="s07_design_4">Detail antarmuka yang aksesibel: status fokus, target sentuh, dan dukungan reduced-motion.</td></tr>
+
+              <tr>
+                <th scope="rowgroup" rowspan="3" data-i18n="s07_rg_dev">Pengembangan Website</th>
+                <td data-i18n="s07_dev_1">Pembuatan empat halaman dengan HTML statis, CSS, dan JavaScript vanilla.</td>
+              </tr>
+              <tr><td data-i18n="s07_dev_2">Navigasi ramah seluler dan navigasi dalam halaman yang mulus.</td></tr>
+              <tr><td data-i18n="s07_dev_3">Ajakan bertindak yang jelas di setiap halaman.</td></tr>
+
+              <tr>
+                <th scope="rowgroup" rowspan="3" data-i18n="s07_rg_port">Portofolio</th>
+                <td data-i18n="s07_port_1">Riwayat proyek yang disajikan menurut tahun.</td>
+              </tr>
+              <tr><td data-i18n="s07_port_2">Galeri kategori: Apartemen, Masjid & Gereja, Gudang, Kantor / Gedung.</td></tr>
+              <tr><td data-i18n="s07_port_3">Tampilan lightbox untuk citra galeri.</td></tr>
+
+              <tr>
+                <th scope="rowgroup" rowspan="3" data-i18n="s07_rg_contact">Kontak</th>
+                <td data-i18n="s07_contact_1">Informasi kontak: telepon, email, dan alamat.</td>
+              </tr>
+              <tr><td data-i18n="s07_contact_2">Peta perkiraan serta aksi panggilan dan email langsung.</td></tr>
+              <tr><td data-i18n="s07_contact_3">Ajakan menghubungi yang diulang di seluruh situs.</td></tr>
+            </tbody>
+            </table>
+          </div>
+        </div>
+
+        <p class="scope__note" data-reveal>
+          <span class="meta" data-i18n="s07_note_meta">Tidak termasuk</span>
+          <span data-i18n="s07_note_text">Lingkup ini tidak mencakup CMS, backend atau basis data, autentikasi, penyediaan hosting atau domain, pemeliharaan, kampanye SEO, maupun integrasi pihak ketiga. Semuanya dicatat dalam Syarat & Ketentuan agar tidak ada kerancuan.</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= 08 KEY FEATURES ================= -->
+    <section class="section" id="features" tabindex="-1" aria-labelledby="features-title">
+      <div class="shell">
+        <div class="section-title-row" data-reveal>
+          <div class="section-head">
+            <span class="sec-num" data-i18n="s08_num">08 &mdash; Fitur & Penyempurnaan</span>
+            <h2 id="features-title" data-i18n="s08_title">Dibangun sesuai cara orang menjelajah.</h2>
+          </div>
+          <p class="meta" data-i18n="s08_meta">Sepuluh fitur</p>
+        </div>
+
+        <ul class="features" style="margin-top:clamp(2rem,4vw,3rem)">
+          <li class="feature" data-reveal>
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="12" rx="1"/><path d="M8 20h8M12 16v4" stroke-linecap="round"/></svg></span>
+            <h3 data-i18n="s08_f1_h">Desain responsif</h3>
+            <p data-i18n="s08_f1_p">Satu tata letak yang tetap utuh dari ponsel 390px hingga desktop lebar.</p>
+          </li>
+          <li class="feature" data-reveal style="--reveal-delay:60ms">
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h16M4 12h16M4 18h10" stroke-linecap="round"/></svg></span>
+            <h3 data-i18n="s08_f2_h">Sistem visual korporat modern</h3>
+            <p data-i18n="s08_f2_p">Bahasa tipografi, warna, dan spasi yang konsisten di setiap halaman.</p>
+          </li>
+          <li class="feature" data-reveal style="--reveal-delay:120ms">
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="8" height="8"/><rect x="13" y="3" width="8" height="8"/><rect x="3" y="13" width="8" height="8"/><rect x="13" y="13" width="8" height="8"/></svg></span>
+            <h3 data-i18n="s08_f3_h">Galeri portofolio interaktif</h3>
+            <p data-i18n="s08_f3_p">Kategori yang mudah ditelusuri dan nyaman dijelajahi.</p>
+          </li>
+          <li class="feature" data-reveal style="--reveal-delay:180ms">
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5h16v14H4z"/><path d="M4 9h16M8 5v14" stroke-linecap="round"/></svg></span>
+            <h3 data-i18n="s08_f4_h">Riwayat proyek menurut tahun</h3>
+            <p data-i18n="s08_f4_p">Rekam kronologis yang membuat dua dekade pekerjaan mudah dibaca.</p>
+          </li>
+          <li class="feature" data-reveal style="--reveal-delay:240ms">
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5M11 8v6M8 11h6" stroke-linecap="round"/></svg></span>
+            <h3 data-i18n="s08_f5_h">Tampilan lightbox</h3>
+            <p data-i18n="s08_f5_p">Gambar terbuka penuh layar dengan kendali papan ketik dan tombol tutup yang jelas.</p>
+          </li>
+          <li class="feature" data-reveal style="--reveal-delay:300ms">
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <h3 data-i18n="s08_f6_h">Navigasi halaman yang mulus</h3>
+            <p data-i18n="s08_f6_p">Header bersama yang menjaga orientasi tetap konsisten antar halaman.</p>
+          </li>
+          <li class="feature" data-reveal style="--reveal-delay:360ms">
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2" stroke-linecap="round"/></svg></span>
+            <h3 data-i18n="s08_f7_h">Navigasi ramah seluler</h3>
+            <p data-i18n="s08_f7_p">Menu yang aksesibel, dapat dibuka, ditutup, dan mengembalikan fokus dengan benar.</p>
+          </li>
+          <li class="feature" data-reveal style="--reveal-delay:420ms">
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7l9 6 9-6"/><rect x="3" y="5" width="18" height="14" rx="1"/></svg></span>
+            <h3 data-i18n="s08_f8_h">Ajakan kontak yang jelas</h3>
+            <p data-i18n="s08_f8_p">Langkah berikutnya terlihat jelas di setiap halaman, tidak terkubur di bagian bawah.</p>
+          </li>
+          <li class="feature" data-reveal style="--reveal-delay:480ms">
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 3L4 14h7l-1 7 9-11h-7z" stroke-linejoin="round"/></svg></span>
+            <h3 data-i18n="s08_f9_h">Aset lokal yang optimal</h3>
+            <p data-i18n="s08_f9_p">Gambar disajikan secara lokal, dimuat bertahap, dan berukuran tepat agar tata letak tidak bergeser.</p>
+          </li>
+          <li class="feature" data-reveal style="--reveal-delay:540ms">
+            <span class="feature__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2" stroke-linecap="round"/></svg></span>
+            <h3 data-i18n="s08_f10_h">Antarmuka yang aksesibel</h3>
+            <p data-i18n="s08_f10_p">Struktur semantik, cincin fokus yang terlihat, dan dukungan reduced-motion.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ================= 09 PROJECT TIMELINE ================= -->
+    <section class="section section--band" id="timeline" tabindex="-1" aria-labelledby="timeline-title" data-nav-section>
+      <div class="shell">
+        <div class="section-title-row" data-reveal>
+          <div class="section-head">
+            <span class="sec-num" data-i18n="s09_num">09 &mdash; Tahapan Pengerjaan</span>
+            <h2 id="timeline-title" data-i18n="s09_title">Enam tahap, dari awal hingga selesai.</h2>
+          </div>
+          <p class="meta" data-i18n="s09_meta">Durasi akan dikonfirmasi</p>
+        </div>
+
+        <p class="muted" data-reveal style="margin-top:1.4rem;max-width:64ch" data-i18n="s09_intro">
+          Setiap tahap di bawah ini mencerminkan cara pekerjaan benar-benar dijalankan. Durasi sengaja dibiarkan terbuka agar dapat disepakati bersama, bukan diasumsikan.
+        </p>
+
+        <ol class="timeline" style="margin-top:clamp(2.2rem,4vw,3.2rem)">
+          <li class="timeline__item" data-reveal>
+            <span class="timeline__num">01</span>
+            <div class="timeline__body">
+              <h3 data-i18n="s09_t1_h">Diskusi & Penentuan Arah</h3>
+              <p data-i18n="s09_t1_p">Meninjau situs saat ini, memastikan tujuan, serta menyepakati struktur dan arah.</p>
+            </div>
+            <span class="timeline__dur ph" data-i18n="s09_dur">[ X hari kerja ]</span>
+          </li>
+          <li class="timeline__item" data-reveal style="--reveal-delay:70ms">
+            <span class="timeline__num">02</span>
+            <div class="timeline__body">
+              <h3 data-i18n="s09_t2_h">UI/UX & Visual Design</h3>
+              <p data-i18n="s09_t2_p">Merancang tata letak halaman, sistem visual, dan perilaku responsif.</p>
+            </div>
+            <span class="timeline__dur ph" data-i18n="s09_dur">[ X hari kerja ]</span>
+          </li>
+          <li class="timeline__item" data-reveal style="--reveal-delay:140ms">
+            <span class="timeline__num">03</span>
+            <div class="timeline__body">
+              <h3 data-i18n="s09_t3_h">Development</h3>
+              <p data-i18n="s09_t3_p">Membangun empat halaman dengan HTML, CSS, dan JavaScript vanilla.</p>
+            </div>
+            <span class="timeline__dur ph" data-i18n="s09_dur">[ X hari kerja ]</span>
+          </li>
+          <li class="timeline__item" data-reveal style="--reveal-delay:210ms">
+            <span class="timeline__num">04</span>
+            <div class="timeline__body">
+              <h3 data-i18n="s09_t4_h">Integrasi Konten & Asset</h3>
+              <p data-i18n="s09_t4_p">Menempatkan konten dan citra perusahaan, dengan pelabelan jujur untuk gambar ilustrasi.</p>
+            </div>
+            <span class="timeline__dur ph" data-i18n="s09_dur">[ X hari kerja ]</span>
+          </li>
+          <li class="timeline__item" data-reveal style="--reveal-delay:280ms">
+            <span class="timeline__num">05</span>
+            <div class="timeline__body">
+              <h3 data-i18n="s09_t5_h">Testing & Responsive QA</h3>
+              <p data-i18n="s09_t5_p">Memeriksa tata letak pada ukuran ponsel, tablet, dan desktop, serta memastikan dasar aksesibilitas.</p>
+            </div>
+            <span class="timeline__dur ph" data-i18n="s09_dur">[ X hari kerja ]</span>
+          </li>
+          <li class="timeline__item" data-reveal style="--reveal-delay:350ms">
+            <span class="timeline__num">06</span>
+            <div class="timeline__body">
+              <h3 data-i18n="s09_t6_h">Final Delivery</h3>
+              <p data-i18n="s09_t6_p">Menyerahkan website yang selesai beserta penjelasan atas apa yang dibangun.</p>
+            </div>
+            <span class="timeline__dur ph" data-i18n="s09_dur">[ X hari kerja ]</span>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================= 10 INVESTMENT ================= -->
+    <section class="section investment" id="investment" tabindex="-1" aria-labelledby="investment-title" data-nav-section>
+      <div class="shell">
+        <div class="section-head" data-reveal>
+          <span class="sec-num" data-i18n="s10_num">10 &mdash; Investasi</span>
+          <h2 id="investment-title" data-i18n="s10_title">Investasi Proyek</h2>
+        </div>
+
+        <div class="investment__grid" style="margin-top:clamp(2rem,4vw,3rem)">
+          <div class="investment__figure" data-reveal>
+            <p class="investment__amount">Rp <span class="ph ph--lg" data-i18n="s10_amount_ph">XX.XXX.XXX</span></p>
+            <p class="investment__term" data-i18n="s10_term">Biaya proyek sekali bayar</p>
+            <p class="investment__note" data-i18n="s10_note">Satu biaya yang mencakup desain, pengembangan, dan QA responsif sesuai ruang lingkup pekerjaan.</p>
+          </div>
+
+          <div class="investment__table-wrap" data-reveal style="--reveal-delay:120ms">
+            <div class="table-scroll" data-scroll-container>
+              <table class="investment__table">
+              <caption class="visually-hidden" data-i18n="s10_caption">Rincian investasi</caption>
+              <thead>
+                <tr>
+                  <th scope="col" data-i18n="s10_th_component">Komponen</th>
+                  <th scope="col" data-i18n="s10_th_amount">Jumlah</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row" data-i18n="s10_row_design">UI/UX & Desain Visual</th>
+                  <td>Rp <span class="ph" data-i18n="s10_price_ph">XX.XXX.XXX</span></td>
+                </tr>
+                <tr>
+                  <th scope="row" data-i18n="s10_row_dev">Pengembangan Website</th>
+                  <td>Rp <span class="ph" data-i18n="s10_price_ph">XX.XXX.XXX</span></td>
+                </tr>
+                <tr>
+                  <th scope="row" data-i18n="s10_row_qa">Responsive & QA</th>
+                  <td>Rp <span class="ph" data-i18n="s10_price_ph">XX.XXX.XXX</span></td>
+                </tr>
+                <tr class="investment__total">
+                  <th scope="row" data-i18n="s10_row_total">Total</th>
+                  <td>Rp <span class="ph ph--lg" data-i18n="s10_total_ph">XX.XXX.XXX</span></td>
+                </tr>
+              </tbody>
+              </table>
+            </div>
+            <p class="investment__disclaimer meta" data-i18n="s10_disclaimer">Angka di atas masih placeholder. Ganti setiap nilai sebelum proposal ini dikirim.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 11 TERMS & CONDITIONS ================= -->
+    <section class="section section--band" id="terms" tabindex="-1" aria-labelledby="terms-title">
+      <div class="shell">
+        <div class="section-head" data-reveal>
+          <span class="sec-num" data-i18n="s11_num">11 &mdash; Syarat & Ketentuan</span>
+          <h2 id="terms-title" data-i18n="s11_title">Ketentuan praktis, disampaikan dengan jelas.</h2>
+          <p class="muted" style="max-width:64ch" data-i18n="s11_muted">Placeholder dalam tanda kurung dapat disunting dan wajib dikonfirmasi sebelum proposal dikirim.</p>
+        </div>
+
+        <dl class="terms" style="margin-top:clamp(2rem,4vw,3rem)">
+          <div class="terms__item" data-reveal>
+            <dt data-i18n="s11_t1_dt">Jadwal pembayaran</dt>
+            <dd><span class="ph" data-i18n="s11_t1_dd">[ Isi ketentuan pembayaran ]</span></dd>
+          </div>
+          <div class="terms__item" data-reveal style="--reveal-delay:60ms">
+            <dt data-i18n="s11_t2_dt">Batasan lingkup</dt>
+            <dd data-i18n="s11_t2_dd">Pekerjaan dibatasi pada ruang lingkup di bagian 07. Apa pun di luarnya ditangani sebagai pekerjaan tambahan.</dd>
+          </div>
+          <div class="terms__item" data-reveal style="--reveal-delay:120ms">
+            <dt data-i18n="s11_t3_dt">Putaran revisi</dt>
+            <dd><span class="ph" data-i18n="s11_t3_dd">[ Isi jumlah revisi ]</span></dd>
+          </div>
+          <div class="terms__item" data-reveal style="--reveal-delay:180ms">
+            <dt data-i18n="s11_t4_dt">Tanggung jawab konten</dt>
+            <dd data-i18n="s11_t4_dd">Klien menyediakan naskah final, gambar, dan detail proyek. Citra ilustrasi dilabeli secara jujur di situs.</dd>
+          </div>
+          <div class="terms__item" data-reveal style="--reveal-delay:240ms">
+            <dt data-i18n="s11_t5_dt">Hosting & domain</dt>
+            <dd><span data-i18n="s11_t5_hosting">Hosting:</span> <span class="ph" data-i18n="s11_t5_ph1">[ Termasuk / Tidak Termasuk ]</span>. <span data-i18n="s11_t5_domain">Domain:</span> <span class="ph" data-i18n="s11_t5_ph2">[ Termasuk / Tidak Termasuk ]</span>.</dd>
+          </div>
+          <div class="terms__item" data-reveal style="--reveal-delay:300ms">
+            <dt data-i18n="s11_t6_dt">Pemeliharaan</dt>
+            <dd><span data-i18n="s11_t6_label">Pemeliharaan:</span> <span class="ph" data-i18n="s11_t6_ph">[ Termasuk / Tidak Termasuk ]</span>.</dd>
+          </div>
+          <div class="terms__item" data-reveal style="--reveal-delay:360ms">
+            <dt data-i18n="s11_t7_dt">Layanan pihak ketiga</dt>
+            <dd data-i18n="s11_t7_dd">Setiap layanan pihak ketiga berbayar, seperti penyedia font atau peta, dicatat terpisah bila digunakan.</dd>
+          </div>
+          <div class="terms__item" data-reveal style="--reveal-delay:420ms">
+            <dt data-i18n="s11_t8_dt">Timeline</dt>
+            <dd data-i18n="s11_t8_dd">Durasi tiap tahap dikonfirmasi di awal dan bergantung pada umpan balik serta konten yang tiba tepat waktu.</dd>
+          </div>
+          <div class="terms__item" data-reveal style="--reveal-delay:480ms">
+            <dt data-i18n="s11_t9_dt">Pekerjaan tambahan</dt>
+            <dd data-i18n="s11_t9_dd">Halaman, fitur, atau integrasi baru akan dihitung dan disepakati sebelum dikerjakan.</dd>
+          </div>
+          <div class="terms__item" data-reveal style="--reveal-delay:540ms">
+            <dt data-i18n="s11_t10_dt">Serah terima akhir</dt>
+            <dd data-i18n="s11_t10_dd">Berkas website yang selesai diserahkan setelah lingkup yang disepakati dan pembayaran tuntas.</dd>
+          </div>
+          <div class="terms__item" data-reveal style="--reveal-delay:600ms">
+            <dt data-i18n="s11_t11_dt">Masa berlaku</dt>
+            <dd><span class="ph" data-i18n="s11_t11_dd">[ Isi masa berlaku proposal ]</span></dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= 12 NEXT STEPS ================= -->
+    <section class="section" id="next" tabindex="-1" aria-labelledby="next-title" data-nav-section>
+      <div class="shell">
+        <div class="section-head" data-reveal>
+          <span class="sec-num" data-i18n="s12_num">12 &mdash; Langkah Selanjutnya</span>
+          <h2 id="next-title" data-i18n="s12_title">Dari persetujuan hingga tayang.</h2>
+        </div>
+
+        <ol class="steps" style="margin-top:clamp(2.2rem,4vw,3.2rem)">
+          <li class="step" data-reveal><span class="step__num">01</span><h3 data-i18n="s12_step1_h">Persetujuan Proposal</h3><p data-i18n="s12_step1_p">Anda meninjau proposal ini dan mengonfirmasi arah serta lingkupnya.</p></li>
+          <li class="step" data-reveal style="--reveal-delay:70ms"><span class="step__num">02</span><h3 data-i18n="s12_step2_h">Konfirmasi Proyek</h3><p data-i18n="s12_step2_p">Kami menyepakati timeline, ketentuan, dan konten awal.</p></li>
+          <li class="step" data-reveal style="--reveal-delay:140ms"><span class="step__num">03</span><h3 data-i18n="s12_step3_h">Desain & Pengembangan</h3><p data-i18n="s12_step3_p">Tata letak dirancang dan website dibangun.</p></li>
+          <li class="step" data-reveal style="--reveal-delay:210ms"><span class="step__num">04</span><h3 data-i18n="s12_step4_h">Tinjauan & Penyempurnaan</h3><p data-i18n="s12_step4_p">Anda meninjau hasilnya dan kami menyempurnakannya sesuai jumlah revisi yang disepakati.</p></li>
+          <li class="step" data-reveal style="--reveal-delay:280ms"><span class="step__num">05</span><h3 data-i18n="s12_step5_h">Serah Terima Akhir</h3><p data-i18n="s12_step5_p">Website yang selesai diserahkan dan siap dipublikasikan.</p></li>
+        </ol>
+
+        <div class="next__cta" data-reveal>
+          <h3 class="next__cta-title" data-i18n="s12_cta_title">Mari Bangun Website Baru PT Raja Tua</h3>
+          <div class="next__actions">
+            <a class="btn btn--solid" href="mailto:angga@artupski.com">
+              <span data-i18n="s12_btn_contact">Hubungi Artupski</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 7l9 6 9-6M4 5h16a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V6a1 1 0 011-1z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a class="btn" href="../">
+              <span data-i18n="s12_btn_website">Buka Website Concept</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <button class="btn no-print" type="button" data-print>
+              <span data-i18n="s12_btn_export">Simpan sebagai PDF</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4v-7h16v7h-2M8 14h8v7H8z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+          <p class="meta no-print" data-i18n="s12_export_note">Tombol ini membuka dialog cetak browser. Pilih &ldquo;Simpan sebagai PDF&rdquo; untuk menyimpan salinan.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 13 CLOSING ================= -->
+    <section class="closing" id="closing" tabindex="-1" aria-labelledby="closing-title">
+      <div class="shell closing__grid">
+        <div class="closing__body">
+          <span class="eyebrow" data-reveal data-i18n="s13_eyebrow">Penutup</span>
+          <h2 id="closing-title" class="closing__title" data-reveal style="--reveal-delay:80ms" data-i18n="s13_title">
+            Kehadiran digital yang lebih kuat dimulai dari cerita yang lebih jelas.
+          </h2>
+        </div>
+        <div class="closing__lockup" data-reveal style="--reveal-delay:160ms">
+          <p class="closing__pair" data-i18n="closing_pair">PT Raja Tua &times; Artupski</p>
+          <p class="closing__doc" data-i18n="closing_doc">Proposal Redesain Website</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="proposal-footer">
+    <div class="shell proposal-footer__inner">
+      <p class="proposal-footer__doc">
+        <strong data-i18n="footer_doc">Proposal Redesain Website</strong>
+        <span data-i18n="footer_meta">PT Raja Tua &times; Artupski &middot; Oktober 2026</span>
+      </p>
+      <p class="proposal-footer__contact">
+        <a href="mailto:angga@artupski.com">angga@artupski.com</a>
+        <span aria-hidden="true">/</span>
+        <a href="tel:+6282211219993">+62 822-1121-9993</a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="assets/js/proposal.js"></script>
+</body>
+</html>

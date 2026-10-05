@@ -1,0 +1,10 @@
+# Runtime / editor noise
+server.log
+*.log
+.DS_Store
+Thumbs.db
+
+# Optional build output (regenerate with: node tools/minify.mjs)
+# Uncomment to keep generated minified files out of version control:
+# assets/css/site.min.css
+# assets/js/site.min.js
