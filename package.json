@@ -13,6 +13,7 @@
     "test:contrast": "node tools/contrast-check.mjs",
     "test:qa": "node tools/qa-check.mjs",
     "test:phase2": "node tools/phase2-check.mjs",
+    "test:phase3": "node tools/phase3-check.mjs",
     "audit:portfolio": "node tools/_audit-portfolio.mjs"
   },
   "engines": {
