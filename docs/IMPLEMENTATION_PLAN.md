@@ -4,7 +4,9 @@
 
 The implementation of Artupski is organized into eight sequential milestones designed to maintain architectural integrity, test coverage, and code cleanliness throughout the development lifecycle.
 
-> **Status:** Phases 1 through 4 are complete (Architecture, Foundation & Asset Pipeline, Companion Plugin & Content Engine, Theme Templates & Generic Presentation Components). Phases 5 through 8 remain the implementation roadmap.
+> **Status:** Phases 1 through 5 are complete (Architecture, Foundation & Asset Pipeline, Companion Plugin & Content Engine, Theme Templates & Generic Presentation Components, Gutenberg Patterns, Customizer Foundation & Classic Compatibility). Phases 6 through 8 remain the implementation roadmap.
+>
+> **Phase 5 scope note:** Phase 5 delivers the **Gutenberg-first authoring layer** (block patterns, the 6 canonical Core block styles, scoped editor parity CSS) plus **Classic Editor compatibility** (TinyMCE style formats and two genuinely useful shortcodes). It also delivers the **foundation** of the theme Customizer: the panel `artupski_theme_options`, the section `artupski_header`, and exactly five header/branding controls (`artupski_header_layout`, `artupski_header_sticky`, `artupski_wordmark_text`, `artupski_wordmark_accent`, `artupski_menu_cta_show`). Those controls use `refresh` transport only — no live-preview JS, and no palette/color/typography/spacing controls (those remain a later, opt-in concern and are intentionally NOT built here).
 
 ```
 +-------------------------------------------------------------------------------------+
@@ -24,7 +26,7 @@ The implementation of Artupski is organized into eight sequential milestones des
 
 ## 2. Detailed Phase Breakdown
 
-### Phase 1: Architecture & Design System Freeze *(current)*
+### Phase 1: Architecture & Design System Freeze
 - [x] Author the documentation suite (`docs/`).
 - [x] Lock the design tokens (color, type, spacing, motion).
 - [x] Decide monorepo structure (theme + `artupski-core` plugin in one repository).
@@ -69,15 +71,23 @@ The implementation of Artupski is organized into eight sequential milestones des
 - [x] Implement specialized page templates: `front-page.php`, `archive-artupski_project.php`, `taxonomy-artupski_project_category.php`, `taxonomy-artupski_project_year.php`, `single-artupski_project.php`, `page.php`, `single.php`, `archive.php`, `404.php`, `search.php`, `home.php`, `index.php`.
 - [x] **Boundary check:** components accept data via `$args` and contain no demo-specific logic.
 
-### Phase 5: Gutenberg Patterns, Customizer & Classic Compatibility
-- [ ] Build `inc/class-customizer.php` with palette switcher, typography controls, and live preview JS.
-- [ ] Register Gutenberg Block Patterns under `artupski-dossier` (`inc/class-gutenberg.php`) as the **primary** authoring path.
-- [ ] Create scoped `assets/css/editor-style.css` for block and classic editor canvas parity.
-- [ ] Implement Classic Editor **compatibility** only:
-  - TinyMCE style formats + utility classes.
-  - A small set of genuinely useful shortcodes (`[artupski_carousel]`, `[artupski_project_list]`) — **not** a 1:1 mirror of patterns.
-  - Anti-`wpautop` hygiene for the block-level shortcodes.
-- [ ] Verify standard Classic content (`the_content()`) renders correctly.
+### Phase 5: Gutenberg Patterns, Customizer & Classic Compatibility *(complete)*
+- [x] Register Gutenberg Block Patterns under `artupski-dossier` (`inc/class-gutenberg.php`) as the **primary** authoring path.
+- [x] Register exactly the **6 canonical Core block styles**: `core/group` → `ink-band`, `core/group` → `paper-boxed`, `core/heading` → `sec-num`, `core/paragraph` → `lede`, `core/paragraph` → `mono-meta`, `core/button` → `tlink`.
+- [x] Create scoped `assets/css/editor-style.css` for block and classic editor canvas parity (consumes `theme.json` tokens; redefines none).
+- [x] Build `inc/class-customizer.php` with the panel `artupski_theme_options`, the section `artupski_header`, and **exactly five** header/branding controls:
+  - `artupski_header_layout` (whitelisted `standard` | `centered` | `minimal`, `refresh`)
+  - `artupski_header_sticky` (boolean, `refresh`)
+  - `artupski_wordmark_text` (text, `sanitize_text_field`, `refresh`; front end falls back to `get_bloginfo( 'name' )`)
+  - `artupski_wordmark_accent` (text, `sanitize_text_field`, `refresh`)
+  - `artupski_menu_cta_show` (boolean, `refresh`)
+- [x] Consume the Customizer options in `template-parts/header/branding.php`, `template-parts/header/nav.php`, and `header.php`.
+- [x] Implement Classic Editor **compatibility** only:
+  - TinyMCE style formats `eyebrow`, `lede`, `meta`, `tlink`, `ink-band`, `paper-boxed`.
+  - Exactly two genuinely useful shortcodes (`[artupski_carousel]`, `[artupski_project_list]`) — **not** a 1:1 mirror of patterns.
+- [x] Rely on standard WordPress shortcode handling. The global priority-1 `the_content` anti-`wpautop` / `shortcode_unautop` hack was removed (superseded by native shortcode handling).
+- [x] Verify standard Classic content (`the_content()`) renders correctly.
+- [x] **Boundary check:** year data resolves through the `artupski_project_year` taxonomy, never a post meta key. No Phase 6 Turbo/carousel/lightbox runtime is present.
 
 ### Phase 6: Turbo Drive Navigation & Interaction
 - [ ] Enqueue `assets/js/site.js` as an ES module (`<script type="module">`) that imports the **local** Turbo bundle.

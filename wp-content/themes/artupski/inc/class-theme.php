@@ -33,6 +33,27 @@ class Artupski_Theme {
 	public $assets;
 
 	/**
+	 * Gutenberg block editor service.
+	 *
+	 * @var Artupski_Gutenberg
+	 */
+	public $gutenberg;
+
+	/**
+	 * Classic editor compatibility service.
+	 *
+	 * @var Artupski_Classic_Editor
+	 */
+	public $classic_editor;
+
+	/**
+	 * Customizer options service.
+	 *
+	 * @var Artupski_Customizer
+	 */
+	public $customizer;
+
+	/**
 	 * Retrieve the singleton instance.
 	 *
 	 * @return Artupski_Theme
@@ -48,7 +69,10 @@ class Artupski_Theme {
 	 * Constructor. Wires services and lifecycle hooks.
 	 */
 	private function __construct() {
-		$this->assets = new Artupski_Assets();
+		$this->assets         = new Artupski_Assets();
+		$this->gutenberg      = new Artupski_Gutenberg();
+		$this->classic_editor = new Artupski_Classic_Editor();
+		$this->customizer     = new Artupski_Customizer();
 
 		add_action( 'after_setup_theme', array( $this, 'setup' ) );
 	}

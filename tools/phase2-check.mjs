@@ -279,17 +279,16 @@ for (const { src, min, kind } of BUILD_PAIRS) {
 }
 
 /* ------------------------------------------------------------------ */
-/* 5. No Phase 3+ symbols                                               */
+/* 5. Content-model boundary (theme must never own CPT/taxonomy/importer) */
+/*                                                                    */
+/* NOTE: Gutenberg patterns, shortcodes and the Customizer are Phase 5 */
+/* theme-owned presentation concerns and are therefore intentionally   */
+/* allowed here; they are enforced by tools/phase5-check.mjs.          */
 /* ------------------------------------------------------------------ */
 const FORBIDDEN_SYMBOLS = [
   /register_post_type\s*\(/,
   /register_taxonomy\s*\(/,
-  /register_block_pattern\s*\(/,
-  /register_block_pattern_category\s*\(/,
-  /add_shortcode\s*\(/,
   /register_nav_menus\s*\([^)]*artupski_project/i,
-  /WP_Customize_/,
-  /customize_register/,
   /artupski-core/,
   /wp_insert_post\s*\(/,
   /register_setting\s*\(/,
@@ -316,7 +315,7 @@ for (const file of phpFiles) {
   }
 }
 if (symbolHits === 0) {
-  report("no Phase 3+ symbols (CPT/taxonomy/pattern/customizer/importer)", false);
+  report("no content-model boundary violations (CPT/taxonomy/importer)", false);
 }
 
 /* ------------------------------------------------------------------ */

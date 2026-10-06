@@ -18,7 +18,7 @@
  *   3. ABSPATH guards on every PHP file in theme.
  *   4. Output escaping verification (no unescaped dynamic echo / print in templates).
  *   5. Integration with artupski-core content model (meta keys & taxonomies referenced).
- *   6. Zero Phase 5+ symbol leaks (no block patterns, customizer class, shortcodes, demo importer).
+ *   6. Zero Phase 6+ symbol leaks (no demo importer service/wizard/CLI).
  *
  * Usage: node tools/phase4-check.mjs
  */
@@ -172,21 +172,24 @@ if (existsSync(templateTagsFile)) {
 }
 
 /* ------------------------------------------------------------------ */
-/* 6. Zero Phase 5+ Leaks                                             */
+/* 6. Zero Phase 6+ Leaks                                             */
+/*                                                                    */
+/* Phase 5 (Gutenberg patterns, block styles, Customizer, Classic      */
+/* compatibility) is complete and theme-owned, so only genuine Phase 6+ */
+/* runtime/importer symbols are forbidden here.                        */
 /* ------------------------------------------------------------------ */
-const FORBIDDEN_PHASE5_PATTERNS = [
-  /class-customizer\.php/i,
-  /class-gutenberg\.php/i,
-  /class-shortcodes\.php/i,
+const FORBIDDEN_PHASE6_PATTERNS = [
   /class-import-service\.php/i,
+  /class-import-wizard\.php/i,
+  /class-import-cli\.php/i,
   /artupski_carousel_shortcode/i,
 ];
 
 for (const file of themePhpFiles) {
   const content = readFileSync(file, "utf8");
-  for (const pattern of FORBIDDEN_PHASE5_PATTERNS) {
+  for (const pattern of FORBIDDEN_PHASE6_PATTERNS) {
     if (pattern.test(content)) {
-      report(`leaked Phase 5+ feature pattern ${pattern} found in ${path.relative(THEME_DIR, file)}`);
+      report(`leaked Phase 6+ feature pattern ${pattern} found in ${path.relative(THEME_DIR, file)}`);
     }
   }
 }

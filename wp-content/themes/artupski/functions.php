@@ -27,6 +27,9 @@ if ( ! defined( 'ARTUPSKI_URI' ) ) {
 require_once ARTUPSKI_DIR . '/inc/class-theme.php';
 require_once ARTUPSKI_DIR . '/inc/class-assets.php';
 require_once ARTUPSKI_DIR . '/inc/template-tags.php';
+require_once ARTUPSKI_DIR . '/inc/class-gutenberg.php';
+require_once ARTUPSKI_DIR . '/inc/class-classic-editor.php';
+require_once ARTUPSKI_DIR . '/inc/class-customizer.php';
 
 /**
  * Return the Artupski theme singleton.

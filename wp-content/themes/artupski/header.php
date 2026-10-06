@@ -31,7 +31,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 do_action( 'artupski_before_header' );
 ?>
 
-<header class="site-header" role="banner">
+<?php
+$artupski_header_layout = get_theme_mod( 'artupski_header_layout', 'standard' );
+$artupski_header_sticky = get_theme_mod( 'artupski_header_sticky', false );
+
+$artupski_header_classes = array( 'site-header' );
+if ( ! empty( $artupski_header_layout ) ) {
+	$artupski_header_classes[] = 'site-header--' . sanitize_html_class( $artupski_header_layout );
+}
+if ( $artupski_header_sticky ) {
+	$artupski_header_classes[] = 'site-header--sticky';
+}
+?>
+<header class="<?php echo esc_attr( implode( ' ', $artupski_header_classes ) ); ?>" role="banner">
 	<div class="shell header-inner">
 		<?php get_template_part( 'template-parts/header/branding' ); ?>
 
