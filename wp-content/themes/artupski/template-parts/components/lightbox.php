@@ -1,8 +1,6 @@
 <?php
 /**
- * Global site footer and document close.
- *
- * Artupski theme footer template.
+ * Presentation Component: Lightbox Markup (Modal Container)
  *
  * @package Artupski
  */
@@ -11,24 +9,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 ?>
-</main><!-- #main -->
-
-<?php
-/**
- * Fires at the bottom of the page, after the site footer.
- *
- * @since 0.1.0
- */
-do_action( 'artupski_after_footer' );
-?>
-
-<footer class="site-footer" role="contentinfo">
-	<div class="shell footer-inner">
-		<?php get_template_part( 'template-parts/footer/widgets' ); ?>
-		<?php get_template_part( 'template-parts/footer/copyright' ); ?>
-	</div>
-</footer>
-
 <div class="lightbox" data-lightbox role="dialog" aria-modal="true" aria-label="<?php esc_attr_e( 'Image viewer', 'artupski' ); ?>" hidden>
 	<div class="lightbox__backdrop" data-lightbox-close tabindex="-1"></div>
 	<div class="lightbox__dialog">
@@ -41,7 +21,3 @@ do_action( 'artupski_after_footer' );
 		</figure>
 	</div>
 </div>
-
-<?php wp_footer(); ?>
-</body>
-</html>

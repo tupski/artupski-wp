@@ -2,8 +2,7 @@
 /**
  * Global document head and site header.
  *
- * Minimal Phase 1 skeleton: semantic landmarks, skip link and the `wp_head()`
- * pipeline. Navigation markup and mobile drawer are built in a later phase.
+ * Artupski theme header template.
  *
  * @package Artupski
  */
@@ -34,29 +33,21 @@ do_action( 'artupski_before_header' );
 
 <header class="site-header" role="banner">
 	<div class="shell header-inner">
-		<div class="site-branding">
-			<?php if ( has_custom_logo() ) : ?>
-				<?php the_custom_logo(); ?>
-			<?php else : ?>
-				<a class="brand" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-					<span class="wordmark"><?php echo esc_html( get_bloginfo( 'name' ) ); ?></span>
-				</a>
-			<?php endif; ?>
-		</div>
+		<?php get_template_part( 'template-parts/header/branding' ); ?>
 
-		<nav id="primary-navigation" class="site-navigation" aria-label="<?php esc_attr_e( 'Primary', 'artupski' ); ?>">
-			<?php
-			wp_nav_menu(
-				array(
-					'theme_location' => 'primary',
-					'container'      => false,
-					'menu_class'     => 'nav-menu',
-					'fallback_cb'    => false,
-					'depth'          => 1,
-				)
-			);
-			?>
-		</nav>
+		<button
+			class="menu-toggle"
+			type="button"
+			data-menu-toggle
+			aria-expanded="false"
+			aria-controls="primary-navigation"
+			aria-label="<?php esc_attr_e( 'Open navigation menu', 'artupski' ); ?>"
+		>
+			<svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg>
+			<svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19" stroke-linecap="round"/></svg>
+		</button>
+
+		<?php get_template_part( 'template-parts/header/nav' ); ?>
 	</div>
 </header>
 

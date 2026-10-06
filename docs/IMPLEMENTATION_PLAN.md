@@ -4,7 +4,7 @@
 
 The implementation of Artupski is organized into eight sequential milestones designed to maintain architectural integrity, test coverage, and code cleanliness throughout the development lifecycle.
 
-> **Status:** Phase 1 (Architecture & Design System Freeze) is complete. **Phase 2 (Foundation & Asset Pipeline)** has been implemented (theme skeleton, `theme.json` as the canonical design-token source, self-hosted WOFF2 fonts, local asset enqueue, pinned local Turbo). Phases 3+ remain a plan, not a record of completed code.
+> **Status:** Phases 1 through 4 are complete (Architecture, Foundation & Asset Pipeline, Companion Plugin & Content Engine, Theme Templates & Generic Presentation Components). Phases 5 through 8 remain the implementation roadmap.
 
 ```
 +-------------------------------------------------------------------------------------+
@@ -16,7 +16,7 @@ The implementation of Artupski is organized into eight sequential milestones des
 |   Phase 5: Gutenberg Patterns, Customizer & Classic Compatibility                  |
 |   Phase 6: Turbo Drive Navigation & Interaction (lifecycles, carousel, lightbox)    |
 |   Phase 7: Shared Demo Import Engine (admin wizard + WP-CLI; Contractor Demo #1)    |
-|   Phase 8: Visual Fidelity, QA, Accessibility & Performance Audit & Release         |
+|   Phase 8: Visual Fidelity, QA & Performance Audit & Release                        |
 +-------------------------------------------------------------------------------------+
 ```
 
@@ -47,17 +47,17 @@ The implementation of Artupski is organized into eight sequential milestones des
 - [x] Confirm scope: do NOT add a full block-theme structure (`templates/`, `parts/`) — v1 is not FSE.
 
 ### Phase 3: Companion Plugin & Content Engine (`artupski-core`)
-- [ ] Initialize companion plugin (`wp-content/plugins/artupski-core/artupski-core.php`).
-- [ ] Register `artupski_project` CPT with `/projects/%artupski_project_year%/%postname%/` rewrite rules (slug `/projects/`, NOT `/portfolio/` — the theme stays generic).
-- [ ] Register the primary `artupski_project_category` taxonomy and the `artupski_project_year` taxonomy.
-- [ ] Register `artupski_team` and `artupski_service` CPTs.
-- [ ] Build secure native meta boxes for project specifications (Category, Scope, Location, Client, Gallery IDs).
-- [ ] **Boundary check:** the plugin must contain no presentation/template code.
+- [x] Initialize companion plugin (`wp-content/plugins/artupski-core/artupski-core.php`).
+- [x] Register `artupski_project` CPT with `/projects/%artupski_project_year%/%postname%/` rewrite rules (slug `/projects/`, NOT `/portfolio/` — the theme stays generic).
+- [x] Register the primary `artupski_project_category` taxonomy and the `artupski_project_year` taxonomy.
+- [x] Register `artupski_team` and `artupski_service` CPTs.
+- [x] Build secure native meta boxes for project specifications (Category, Scope, Location, Client, Gallery IDs, Structural Specs).
+- [x] **Boundary check:** the plugin must contain no presentation/template code.
 
-### Phase 4: Theme Core & Template Hierarchy
-- [ ] Implement `inc/class-theme.php` singleton and theme supports (`title-tag`, `post-thumbnails`).
-- [ ] Create semantic `header.php` and `footer.php` with skip-links, modal lightbox container, and colophon.
-- [ ] Build generic presentation component partials (`template-parts/components/`):
+### Phase 4: Theme Templates & Generic Presentation Components
+- [x] Implement `inc/class-theme.php` singleton and theme supports (`title-tag`, `post-thumbnails`).
+- [x] Create semantic `header.php` and `footer.php` with skip-links, modal lightbox container, and colophon.
+- [x] Build generic presentation component partials (`template-parts/components/`):
   - `hero.php`
   - `section-header.php`
   - `editorial-split.php`
@@ -66,8 +66,8 @@ The implementation of Artupski is organized into eight sequential milestones des
   - `carousel.php`
   - `lightbox.php`
   - `contact-grid.php`
-- [ ] Implement specialized page templates: `front-page.php`, `archive-artupski_project.php`, `single-artupski_project.php`, `404.php`.
-- [ ] **Boundary check:** components accept data via `$args` and contain no demo-specific logic.
+- [x] Implement specialized page templates: `front-page.php`, `archive-artupski_project.php`, `taxonomy-artupski_project_category.php`, `taxonomy-artupski_project_year.php`, `single-artupski_project.php`, `page.php`, `single.php`, `archive.php`, `404.php`, `search.php`, `home.php`, `index.php`.
+- [x] **Boundary check:** components accept data via `$args` and contain no demo-specific logic.
 
 ### Phase 5: Gutenberg Patterns, Customizer & Classic Compatibility
 - [ ] Build `inc/class-customizer.php` with palette switcher, typography controls, and live preview JS.
@@ -79,7 +79,7 @@ The implementation of Artupski is organized into eight sequential milestones des
   - Anti-`wpautop` hygiene for the block-level shortcodes.
 - [ ] Verify standard Classic content (`the_content()`) renders correctly.
 
-### Phase 6: Client-Side Turbo Drive & Interactive Components
+### Phase 6: Turbo Drive Navigation & Interaction
 - [ ] Enqueue `assets/js/site.js` as an ES module (`<script type="module">`) that imports the **local** Turbo bundle.
 - [ ] Validate Turbo lifecycle hooks (`turbo:before-visit`, `turbo:before-cache`, `turbo:render`, `turbo:load`).
 - [ ] Test idempotent delegated event handlers (mobile menu toggle, keyboard trap, carousels, lightbox).
@@ -96,7 +96,7 @@ The implementation of Artupski is organized into eight sequential milestones des
 - [ ] Build the "Create From Scratch" onboarding path (also via the shared service).
 - [ ] **Boundary check:** exactly one import engine exists; no duplicate logic between UI and CLI.
 
-### Phase 8: Visual Fidelity, Quality Assurance & Release
+### Phase 8: Visual Fidelity, QA & Performance Audit & Release
 - [ ] Perform **visual regression comparison** between the `static` baseline and the WordPress implementation (see §3).
 - [ ] Run automated QA scripts (`tools/qa-check.mjs`, `tools/contrast-check.mjs`).
 - [ ] Perform cross-browser testing (Chrome, Safari, Firefox, Edge, Mobile iOS/Android).
